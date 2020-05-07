@@ -1,0 +1,28 @@
+body {
+	color: #000;
+	background-color: #d5d5d5;
+	SCROLLBAR-FACE-COLOR:  #ffcc99;
+}
+
+span,text,button, input, select, textarea{
+	color:black;
+	fill:black;
+	font-size: 11px;
+}
+.outer-div{
+	background-color: #fff;
+	border-radius: 0px;
+	/* border: 2px solid #d5d5d5; */
+	border: 1px solid #d5d5d5;
+}
+.block-div {
+	height: 100%;
+	border-radius: 7px;
+}
+
+#content-div{
+	width: 100%;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+}
