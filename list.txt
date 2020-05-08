@@ -1,0 +1,562 @@
+卷 OS 的文件夹 PATH 列表
+卷序列号为 3612-E022
+C:.
+│  list.txt
+│  readme.md
+│  
+├─client
+│  │  index.html
+│  │  
+│  ├─css
+│  │  │  aui-prototyping.css
+│  │  │  bootstrap-slider.css
+│  │  │  bootstrap-switch.css
+│  │  │  bootstrap.min.css
+│  │  │  buttons.css
+│  │  │  d3tip-example-styles.css
+│  │  │  font-awesome.min.css
+│  │  │  inspector.css
+│  │  │  jquery-labelauty.css
+│  │  │  jquery-ui.min.css
+│  │  │  jquery.contextMenu.css
+│  │  │  jquery.mCustomScrollbar.css
+│  │  │  main-black.css
+│  │  │  main-white.css
+│  │  │  main.css
+│  │  │  materialize.css
+│  │  │  materialize.min.css
+│  │  │  wan-spinner.css
+│  │  │  
+│  │  └─icheck
+│  │          aero.css
+│  │          aero.png
+│  │          aero@2x.png
+│  │          blue.css
+│  │          blue.png
+│  │          blue@2x.png
+│  │          green.css
+│  │          green.png
+│  │          green@2x.png
+│  │          grey.css
+│  │          grey.png
+│  │          grey@2x.png
+│  │          minimal.css
+│  │          minimal.png
+│  │          minimal@2x.png
+│  │          orange.css
+│  │          orange.png
+│  │          orange@2x.png
+│  │          pink.css
+│  │          pink.png
+│  │          pink@2x.png
+│  │          purple.css
+│  │          purple.png
+│  │          purple@2x.png
+│  │          red.css
+│  │          red.png
+│  │          red@2x.png
+│  │          yellow.css
+│  │          yellow.png
+│  │          yellow@2x.png
+│  │          _all.css
+│  │          
+│  ├─data
+│  ├─font
+│  │      禹卫书法行书简体.TTF
+│  │      邯郸串城体.ttf
+│  │      
+│  ├─fonts
+│  │      fontawesome-webfont.eot
+│  │      fontawesome-webfont.svg
+│  │      fontawesome-webfont.ttf
+│  │      fontawesome-webfont.woff
+│  │      fontawesome-webfont.woff2
+│  │      FontAwesome.otf
+│  │      
+│  ├─image
+│  ├─js
+│  │      Boolean_search.js
+│  │      observer.js
+│  │      
+│  └─jslib
+│      │  aui-prototyping.js
+│      │  bootstrap-slider.min.js
+│      │  bootstrap-switch.js
+│      │  bootstrap.min.js
+│      │  buttons.js
+│      │  d3-contour.js
+│      │  d3-contour.min.js
+│      │  d3-scale-chromatic.v1.min.js
+│      │  d3.js
+│      │  d3tip.js
+│      │  dataTool.js
+│      │  icheck.js
+│      │  iconfont.js
+│      │  jquery-labelauty.js
+│      │  jquery-ui.min.js
+│      │  jquery.contextMenu.js
+│      │  jquery.mCustomScrollbar.concat.min.js
+│      │  jquery.min.js
+│      │  materialize.js
+│      │  materialize.min.js
+│      │  spin.min.js
+│      │  svg-pan-zoom.js
+│      │  underscore-min.js
+│      │  
+│      └─amcharts
+│              animated.js
+│              charts.js
+│              core.js
+│              frozen.js
+│              maps.js
+│              sunburst.js
+│              
+└─server
+    │  data_process.py
+    │  server.py
+    │  
+    ├─.idea
+    │  │  misc.xml
+    │  │  modules.xml
+    │  │  server.iml
+    │  │  workspace.xml
+    │  │  
+    │  └─inspectionProfiles
+    │          profiles_settings.xml
+    │          
+    ├─venv
+    │  │  pyvenv.cfg
+    │  │  
+    │  ├─Include
+    │  ├─Lib
+    │  │  └─site-packages
+    │  │      │  easy-install.pth
+    │  │      │  setuptools-40.8.0-py3.7.egg
+    │  │      │  setuptools.pth
+    │  │      │  
+    │  │      └─pip-19.0.3-py3.7.egg
+    │  │          ├─EGG-INFO
+    │  │          │      dependency_links.txt
+    │  │          │      entry_points.txt
+    │  │          │      not-zip-safe
+    │  │          │      PKG-INFO
+    │  │          │      SOURCES.txt
+    │  │          │      top_level.txt
+    │  │          │      
+    │  │          └─pip
+    │  │              │  __init__.py
+    │  │              │  __main__.py
+    │  │              │  
+    │  │              ├─_internal
+    │  │              │  │  build_env.py
+    │  │              │  │  cache.py
+    │  │              │  │  configuration.py
+    │  │              │  │  download.py
+    │  │              │  │  exceptions.py
+    │  │              │  │  index.py
+    │  │              │  │  locations.py
+    │  │              │  │  pep425tags.py
+    │  │              │  │  pyproject.py
+    │  │              │  │  resolve.py
+    │  │              │  │  wheel.py
+    │  │              │  │  __init__.py
+    │  │              │  │  
+    │  │              │  ├─cli
+    │  │              │  │      autocompletion.py
+    │  │              │  │      base_command.py
+    │  │              │  │      cmdoptions.py
+    │  │              │  │      main_parser.py
+    │  │              │  │      parser.py
+    │  │              │  │      status_codes.py
+    │  │              │  │      __init__.py
+    │  │              │  │      
+    │  │              │  ├─commands
+    │  │              │  │      check.py
+    │  │              │  │      completion.py
+    │  │              │  │      configuration.py
+    │  │              │  │      download.py
+    │  │              │  │      freeze.py
+    │  │              │  │      hash.py
+    │  │              │  │      help.py
+    │  │              │  │      install.py
+    │  │              │  │      list.py
+    │  │              │  │      search.py
+    │  │              │  │      show.py
+    │  │              │  │      uninstall.py
+    │  │              │  │      wheel.py
+    │  │              │  │      __init__.py
+    │  │              │  │      
+    │  │              │  ├─models
+    │  │              │  │      candidate.py
+    │  │              │  │      format_control.py
+    │  │              │  │      index.py
+    │  │              │  │      link.py
+    │  │              │  │      __init__.py
+    │  │              │  │      
+    │  │              │  ├─operations
+    │  │              │  │      check.py
+    │  │              │  │      freeze.py
+    │  │              │  │      prepare.py
+    │  │              │  │      __init__.py
+    │  │              │  │      
+    │  │              │  ├─req
+    │  │              │  │      constructors.py
+    │  │              │  │      req_file.py
+    │  │              │  │      req_install.py
+    │  │              │  │      req_set.py
+    │  │              │  │      req_tracker.py
+    │  │              │  │      req_uninstall.py
+    │  │              │  │      __init__.py
+    │  │              │  │      
+    │  │              │  ├─utils
+    │  │              │  │      appdirs.py
+    │  │              │  │      compat.py
+    │  │              │  │      deprecation.py
+    │  │              │  │      encoding.py
+    │  │              │  │      filesystem.py
+    │  │              │  │      glibc.py
+    │  │              │  │      hashes.py
+    │  │              │  │      logging.py
+    │  │              │  │      misc.py
+    │  │              │  │      models.py
+    │  │              │  │      outdated.py
+    │  │              │  │      packaging.py
+    │  │              │  │      setuptools_build.py
+    │  │              │  │      temp_dir.py
+    │  │              │  │      typing.py
+    │  │              │  │      ui.py
+    │  │              │  │      __init__.py
+    │  │              │  │      
+    │  │              │  └─vcs
+    │  │              │          bazaar.py
+    │  │              │          git.py
+    │  │              │          mercurial.py
+    │  │              │          subversion.py
+    │  │              │          __init__.py
+    │  │              │          
+    │  │              └─_vendor
+    │  │                  │  appdirs.py
+    │  │                  │  distro.py
+    │  │                  │  ipaddress.py
+    │  │                  │  pyparsing.py
+    │  │                  │  retrying.py
+    │  │                  │  six.py
+    │  │                  │  __init__.py
+    │  │                  │  
+    │  │                  ├─cachecontrol
+    │  │                  │  │  adapter.py
+    │  │                  │  │  cache.py
+    │  │                  │  │  compat.py
+    │  │                  │  │  controller.py
+    │  │                  │  │  filewrapper.py
+    │  │                  │  │  heuristics.py
+    │  │                  │  │  serialize.py
+    │  │                  │  │  wrapper.py
+    │  │                  │  │  _cmd.py
+    │  │                  │  │  __init__.py
+    │  │                  │  │  
+    │  │                  │  └─caches
+    │  │                  │          file_cache.py
+    │  │                  │          redis_cache.py
+    │  │                  │          __init__.py
+    │  │                  │          
+    │  │                  ├─certifi
+    │  │                  │      cacert.pem
+    │  │                  │      core.py
+    │  │                  │      __init__.py
+    │  │                  │      __main__.py
+    │  │                  │      
+    │  │                  ├─chardet
+    │  │                  │  │  big5freq.py
+    │  │                  │  │  big5prober.py
+    │  │                  │  │  chardistribution.py
+    │  │                  │  │  charsetgroupprober.py
+    │  │                  │  │  charsetprober.py
+    │  │                  │  │  codingstatemachine.py
+    │  │                  │  │  compat.py
+    │  │                  │  │  cp949prober.py
+    │  │                  │  │  enums.py
+    │  │                  │  │  escprober.py
+    │  │                  │  │  escsm.py
+    │  │                  │  │  eucjpprober.py
+    │  │                  │  │  euckrfreq.py
+    │  │                  │  │  euckrprober.py
+    │  │                  │  │  euctwfreq.py
+    │  │                  │  │  euctwprober.py
+    │  │                  │  │  gb2312freq.py
+    │  │                  │  │  gb2312prober.py
+    │  │                  │  │  hebrewprober.py
+    │  │                  │  │  jisfreq.py
+    │  │                  │  │  jpcntx.py
+    │  │                  │  │  langbulgarianmodel.py
+    │  │                  │  │  langcyrillicmodel.py
+    │  │                  │  │  langgreekmodel.py
+    │  │                  │  │  langhebrewmodel.py
+    │  │                  │  │  langhungarianmodel.py
+    │  │                  │  │  langthaimodel.py
+    │  │                  │  │  langturkishmodel.py
+    │  │                  │  │  latin1prober.py
+    │  │                  │  │  mbcharsetprober.py
+    │  │                  │  │  mbcsgroupprober.py
+    │  │                  │  │  mbcssm.py
+    │  │                  │  │  sbcharsetprober.py
+    │  │                  │  │  sbcsgroupprober.py
+    │  │                  │  │  sjisprober.py
+    │  │                  │  │  universaldetector.py
+    │  │                  │  │  utf8prober.py
+    │  │                  │  │  version.py
+    │  │                  │  │  __init__.py
+    │  │                  │  │  
+    │  │                  │  └─cli
+    │  │                  │          chardetect.py
+    │  │                  │          __init__.py
+    │  │                  │          
+    │  │                  ├─colorama
+    │  │                  │      ansi.py
+    │  │                  │      ansitowin32.py
+    │  │                  │      initialise.py
+    │  │                  │      win32.py
+    │  │                  │      winterm.py
+    │  │                  │      __init__.py
+    │  │                  │      
+    │  │                  ├─distlib
+    │  │                  │  │  compat.py
+    │  │                  │  │  database.py
+    │  │                  │  │  index.py
+    │  │                  │  │  locators.py
+    │  │                  │  │  manifest.py
+    │  │                  │  │  markers.py
+    │  │                  │  │  metadata.py
+    │  │                  │  │  resources.py
+    │  │                  │  │  scripts.py
+    │  │                  │  │  t32.exe
+    │  │                  │  │  t64.exe
+    │  │                  │  │  util.py
+    │  │                  │  │  version.py
+    │  │                  │  │  w32.exe
+    │  │                  │  │  w64.exe
+    │  │                  │  │  wheel.py
+    │  │                  │  │  __init__.py
+    │  │                  │  │  
+    │  │                  │  └─_backport
+    │  │                  │          misc.py
+    │  │                  │          shutil.py
+    │  │                  │          sysconfig.cfg
+    │  │                  │          sysconfig.py
+    │  │                  │          tarfile.py
+    │  │                  │          __init__.py
+    │  │                  │          
+    │  │                  ├─html5lib
+    │  │                  │  │  constants.py
+    │  │                  │  │  html5parser.py
+    │  │                  │  │  serializer.py
+    │  │                  │  │  _ihatexml.py
+    │  │                  │  │  _inputstream.py
+    │  │                  │  │  _tokenizer.py
+    │  │                  │  │  _utils.py
+    │  │                  │  │  __init__.py
+    │  │                  │  │  
+    │  │                  │  ├─filters
+    │  │                  │  │      alphabeticalattributes.py
+    │  │                  │  │      base.py
+    │  │                  │  │      inject_meta_charset.py
+    │  │                  │  │      lint.py
+    │  │                  │  │      optionaltags.py
+    │  │                  │  │      sanitizer.py
+    │  │                  │  │      whitespace.py
+    │  │                  │  │      __init__.py
+    │  │                  │  │      
+    │  │                  │  ├─treeadapters
+    │  │                  │  │      genshi.py
+    │  │                  │  │      sax.py
+    │  │                  │  │      __init__.py
+    │  │                  │  │      
+    │  │                  │  ├─treebuilders
+    │  │                  │  │      base.py
+    │  │                  │  │      dom.py
+    │  │                  │  │      etree.py
+    │  │                  │  │      etree_lxml.py
+    │  │                  │  │      __init__.py
+    │  │                  │  │      
+    │  │                  │  ├─treewalkers
+    │  │                  │  │      base.py
+    │  │                  │  │      dom.py
+    │  │                  │  │      etree.py
+    │  │                  │  │      etree_lxml.py
+    │  │                  │  │      genshi.py
+    │  │                  │  │      __init__.py
+    │  │                  │  │      
+    │  │                  │  └─_trie
+    │  │                  │          datrie.py
+    │  │                  │          py.py
+    │  │                  │          _base.py
+    │  │                  │          __init__.py
+    │  │                  │          
+    │  │                  ├─idna
+    │  │                  │      codec.py
+    │  │                  │      compat.py
+    │  │                  │      core.py
+    │  │                  │      idnadata.py
+    │  │                  │      intranges.py
+    │  │                  │      package_data.py
+    │  │                  │      uts46data.py
+    │  │                  │      __init__.py
+    │  │                  │      
+    │  │                  ├─lockfile
+    │  │                  │      linklockfile.py
+    │  │                  │      mkdirlockfile.py
+    │  │                  │      pidlockfile.py
+    │  │                  │      sqlitelockfile.py
+    │  │                  │      symlinklockfile.py
+    │  │                  │      __init__.py
+    │  │                  │      
+    │  │                  ├─msgpack
+    │  │                  │      exceptions.py
+    │  │                  │      fallback.py
+    │  │                  │      _version.py
+    │  │                  │      __init__.py
+    │  │                  │      
+    │  │                  ├─packaging
+    │  │                  │      markers.py
+    │  │                  │      requirements.py
+    │  │                  │      specifiers.py
+    │  │                  │      utils.py
+    │  │                  │      version.py
+    │  │                  │      _compat.py
+    │  │                  │      _structures.py
+    │  │                  │      __about__.py
+    │  │                  │      __init__.py
+    │  │                  │      
+    │  │                  ├─pep517
+    │  │                  │      build.py
+    │  │                  │      check.py
+    │  │                  │      colorlog.py
+    │  │                  │      compat.py
+    │  │                  │      envbuild.py
+    │  │                  │      wrappers.py
+    │  │                  │      _in_process.py
+    │  │                  │      __init__.py
+    │  │                  │      
+    │  │                  ├─pkg_resources
+    │  │                  │      py31compat.py
+    │  │                  │      __init__.py
+    │  │                  │      
+    │  │                  ├─progress
+    │  │                  │      bar.py
+    │  │                  │      counter.py
+    │  │                  │      helpers.py
+    │  │                  │      spinner.py
+    │  │                  │      __init__.py
+    │  │                  │      
+    │  │                  ├─pytoml
+    │  │                  │      core.py
+    │  │                  │      parser.py
+    │  │                  │      test.py
+    │  │                  │      utils.py
+    │  │                  │      writer.py
+    │  │                  │      __init__.py
+    │  │                  │      
+    │  │                  ├─requests
+    │  │                  │      adapters.py
+    │  │                  │      api.py
+    │  │                  │      auth.py
+    │  │                  │      certs.py
+    │  │                  │      compat.py
+    │  │                  │      cookies.py
+    │  │                  │      exceptions.py
+    │  │                  │      help.py
+    │  │                  │      hooks.py
+    │  │                  │      models.py
+    │  │                  │      packages.py
+    │  │                  │      sessions.py
+    │  │                  │      status_codes.py
+    │  │                  │      structures.py
+    │  │                  │      utils.py
+    │  │                  │      _internal_utils.py
+    │  │                  │      __init__.py
+    │  │                  │      __version__.py
+    │  │                  │      
+    │  │                  ├─urllib3
+    │  │                  │  │  connection.py
+    │  │                  │  │  connectionpool.py
+    │  │                  │  │  exceptions.py
+    │  │                  │  │  fields.py
+    │  │                  │  │  filepost.py
+    │  │                  │  │  poolmanager.py
+    │  │                  │  │  request.py
+    │  │                  │  │  response.py
+    │  │                  │  │  _collections.py
+    │  │                  │  │  __init__.py
+    │  │                  │  │  
+    │  │                  │  ├─contrib
+    │  │                  │  │  │  appengine.py
+    │  │                  │  │  │  ntlmpool.py
+    │  │                  │  │  │  pyopenssl.py
+    │  │                  │  │  │  securetransport.py
+    │  │                  │  │  │  socks.py
+    │  │                  │  │  │  _appengine_environ.py
+    │  │                  │  │  │  __init__.py
+    │  │                  │  │  │  
+    │  │                  │  │  └─_securetransport
+    │  │                  │  │          bindings.py
+    │  │                  │  │          low_level.py
+    │  │                  │  │          __init__.py
+    │  │                  │  │          
+    │  │                  │  ├─packages
+    │  │                  │  │  │  six.py
+    │  │                  │  │  │  __init__.py
+    │  │                  │  │  │  
+    │  │                  │  │  ├─backports
+    │  │                  │  │  │      makefile.py
+    │  │                  │  │  │      __init__.py
+    │  │                  │  │  │      
+    │  │                  │  │  └─ssl_match_hostname
+    │  │                  │  │          _implementation.py
+    │  │                  │  │          __init__.py
+    │  │                  │  │          
+    │  │                  │  └─util
+    │  │                  │          connection.py
+    │  │                  │          queue.py
+    │  │                  │          request.py
+    │  │                  │          response.py
+    │  │                  │          retry.py
+    │  │                  │          ssl_.py
+    │  │                  │          timeout.py
+    │  │                  │          url.py
+    │  │                  │          wait.py
+    │  │                  │          __init__.py
+    │  │                  │          
+    │  │                  └─webencodings
+    │  │                          labels.py
+    │  │                          mklabels.py
+    │  │                          tests.py
+    │  │                          x_user_defined.py
+    │  │                          __init__.py
+    │  │                          
+    │  └─Scripts
+    │          activate
+    │          activate.bat
+    │          Activate.ps1
+    │          deactivate.bat
+    │          easy_install-3.7-script.py
+    │          easy_install-3.7.exe
+    │          easy_install-script.py
+    │          easy_install.exe
+    │          pip-script.py
+    │          pip.exe
+    │          pip3-script.py
+    │          pip3.7-script.py
+    │          pip3.7.exe
+    │          pip3.exe
+    │          python.exe
+    │          pythonw.exe
+    │          
+    └─__pycache__
+            Al_algorithm.cpython-37.pyc
+            classify_model.cpython-37.pyc
+            equal_groups.cpython-37.pyc
+            relative_info.cpython-37.pyc
+            select_function.cpython-37.pyc
+            soinn.cpython-37.pyc
+            util.cpython-37.pyc
+            
