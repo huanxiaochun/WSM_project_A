@@ -85,31 +85,31 @@ def deal_data1(filepath):
     #     os.rename(oldname, newname)
 
     '''Create table data1'''
-    # sql = '''CREATE TABLE data1
-    #             (ID            INT  PRIMARY KEY   NOT NULL,
-    #             iname          TEXT,
-    #             caseCode       TEXT,
-    #             age            INT,
-    #             sexy           CHAR(10),
-    #             cardNum        TEXT,
-    #             businessEntity     TEXT,
-    #             courtName          TEXT,
-    #             areaName    DATE,
-    #             partyTypeName        TEXT,
-    #             gistId        TEXT,
-    #             regDate        DATE,
-    #             gistUnit        TEXT,
-    #             duty        TEXT,
-    #             performance        TEXT,
-    #             performedPart        TEXT,
-    #             unperformPart        TEXT,
-    #             disruptTypeName        TEXT,
-    #             publishDate          DATE,
-    #             qysler            TEXT);'''
-    #
-    # c.execute(sql)
-    # print("Table created successfully...")
-    # conn.commit()
+    sql = '''CREATE TABLE data1
+                (ID            INT  PRIMARY KEY   NOT NULL,
+                iname          TEXT,
+                caseCode       TEXT,
+                age            INT,
+                sexy           CHAR(10),
+                cardNum        TEXT,
+                businessEntity     TEXT,
+                courtName          TEXT,
+                areaName    TEXT,
+                partyTypeName        TEXT,
+                gistId        TEXT,
+                regDate        DATE,
+                gistUnit        TEXT,
+                duty        TEXT,
+                performance        TEXT,
+                performedPart        TEXT,
+                unperformPart        TEXT,
+                disruptTypeName        TEXT,
+                publishDate          DATE,
+                qysler            TEXT);'''
+
+    c.execute(sql)
+    print("Table created successfully...")
+    conn.commit()
 
     keys = ['id', 'iname', 'caseCode', 'age', 'sexy', 'cardNum', 'businessEntity', 'courtName', 'areaName', 'partyTypeName',
      'gistId', 'regDate', 'gistUnit', 'duty', 'performance', 'performedPart', 'unperformPart', 'disruptTypeName',
@@ -168,10 +168,10 @@ if __name__ == '__main__':
     # print("start processing instruments..")
     # deal_instruments(instruments_path)
 
-    # print("start processing data1..")
-    # deal_data1(data1_path)
+    print("start processing data1..")
+    deal_data1(data1_path)
 
-    print("start processing data2..")
-    deal_data2(data2_path)
+    # print("start processing data2..")
+    # deal_data2(data2_path)
 
     conn.close()
