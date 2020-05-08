@@ -1,16 +1,22 @@
 import os
+import shutil
 import json
 from datetime import datetime
 import sqlite3
 import re
 from tqdm import tqdm
 
-data_root = r'C:\Users\86183\Desktop\研究生课\研一下\互联网信息搜索与挖掘\project_A\data\\'
-data1_path = r'C:\Users\86183\Desktop\研究生课\研一下\互联网信息搜索与挖掘\project_A\data\data1\home\data\law\zxgk\\'
-data2_path = r'C:\Users\86183\Desktop\研究生课\研一下\互联网信息搜索与挖掘\project_A\data\data2\home\data\law\hshfy\info\\'
-instruments_path = r'C:\Users\86183\Desktop\研究生课\研一下\互联网信息搜索与挖掘\project_A\data\instruments\home\data\law\hshfy_wenshu\\'
+# the path to server html, js, css files
+root_path = os.path.join(os.path.split(__file__)[0], '../../data')
+# os.path.abspath返回绝对路径
+root_path = os.path.abspath(root_path)
 
-conn = sqlite3.connect(data_root + 'data.db')
+data1_path = os.path.join(root_path, r'data1\home\data\law\zxgk')
+data2_path = os.path.join(root_path, r'data2\home\data\law\hshfy\info')
+instruments_path = os.path.join(root_path, r'instruments\home\data\law\hshfy_wenshu')
+
+conn = sqlite3.connect(os.path.join(root_path, 'data.db'))
+conn.text_factory = str
 print("Opened database successfully...")
 c = conn.cursor()
 
@@ -25,8 +31,8 @@ def deal_instruments(filepath):
 
     '''Convert to json file'''
     # for file in tqdm(instruments_files, desc='instruments convert to json...'):
-    #     oldname = filepath + file
-    #     newname = filepath + file + ".json"
+    #     oldname = os.path.join(filepath, file)
+    #     newname = os.path.join(filepath, file, '.json')
     #     os.rename(oldname, newname)
 
     '''Create table instruments'''
@@ -46,7 +52,7 @@ def deal_instruments(filepath):
 
     '''Save data to the database'''
     for file in tqdm(instruments_files, desc="insert instruments..."):
-        with open(instruments_path + file) as f:
+        with open(os.path.join(filepath, file)) as f:
             data = json.load(f)
 
             # data processing
@@ -80,8 +86,8 @@ def deal_data1(filepath):
 
     '''Convert to json file'''
     # for file in tqdm(data1_files, desc='data1 convert to json...'):
-    #     oldname = filepath + file
-    #     newname = filepath + file + ".json"
+    #     oldname = os.path.join(filepath, file)
+    #     newname = os.path.join(filepath, file, '.json')
     #     os.rename(oldname, newname)
 
     '''Create table data1'''
@@ -118,7 +124,7 @@ def deal_data1(filepath):
 
     '''Save data to the database'''
     for file in tqdm(data1_files, desc="insert data1..."):
-        with open(data1_path + file) as f:
+        with open(os.path.join(filepath, file)) as f:
             data = json.load(f)
 
             # data processing
@@ -130,14 +136,10 @@ def deal_data1(filepath):
                 elif key == 'qysler':
                     data[key] = str(data[key])
                 elif key == 'gistId' and isinstance(data[key], list):
-                    
                     data[key] = ' '.join(data[key])
                 else:
                     if isinstance(data[key], str):
                         data[key] = data[key].strip()
-
-            # for key in data:
-            #     print(key, data[key], type(data[key]))
 
             # Insert each record
             values = []
@@ -162,16 +164,56 @@ def deal_data2(filepath):
         :return: None
     '''
     data2_files = os.listdir(filepath)
-    print(len(data2_files))
+
+    '''Create table instruments'''
+    sql = '''CREATE TABLE data2
+                (caseCode           TEXT  ,
+                iname               CHAR(20),
+                iaddress            TEXT,
+                imoney              TEXT,
+                ename               CHAR(20),
+                courtName_phone      TEXT);'''
+    c.execute(sql)
+    print("Table created successfully...")
+    conn.commit()
+
+    total_num = 390355
+    pbar = tqdm(total=total_num, desc='insert data2...')
+    '''Save data to the database'''
+    for root, dirs, files in os.walk(filepath):
+        # Gets all files that are not folders
+        for filename in files:
+            full_path = os.path.join(root, filename)
+
+            with open(full_path) as f:
+                data = json.load(f)
+
+                # for key in data:
+                #     if key == "执行标的金额（元）":
+                #         m = re.findall(r"\d+\.*?\d*", data[key])[0]
+                #         data[key] = float(m)
+
+                # Insert each record
+                values = []
+                for key in data:
+                    values.append(data[key])
+                values = tuple(values)
+                sql = "insert into data2 values(?, ?, ?, ?, ?, ?)"
+                c.execute(sql, values)
+                pbar.update(1)
+
+    pbar.close()
+    conn.commit()
+    print("Records created successfully...")
 
 
 if __name__ == '__main__':
     # print("start processing instruments..")
     # deal_instruments(instruments_path)
-
-    print("start processing data1..")
-    deal_data1(data1_path)
-
+    #
+    # print("start processing data1..")
+    # deal_data1(data1_path)
+    #
     # print("start processing data2..")
     # deal_data2(data2_path)
 
