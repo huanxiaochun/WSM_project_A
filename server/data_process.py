@@ -130,6 +130,7 @@ def deal_data1(filepath):
                 elif key == 'qysler':
                     data[key] = str(data[key])
                 elif key == 'gistId' and isinstance(data[key], list):
+                    
                     data[key] = ' '.join(data[key])
                 else:
                     if isinstance(data[key], str):
