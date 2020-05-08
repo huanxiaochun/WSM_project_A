@@ -1,4 +1,5 @@
 ### 目录结构
+```
 │  readme.md
 │  
 ├─ client
@@ -20,9 +21,11 @@
     │  server.py
     │  
     ├─.idea
+    |
     ├─venv
+    |
     └─__pycache__
-            
+```            
 
 
 
