@@ -19,11 +19,9 @@
 └─server
     │  data_process.py
     │  server.py
-    │  
+    |
     ├─.idea
-    |
     ├─venv
-    |
     └─__pycache__
 ```            
 
