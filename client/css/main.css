@@ -1,6 +1,6 @@
 body {
 	color: #000;
-	background-color: #d5d5d5;
+	background-color: #ffffff;
 	SCROLLBAR-FACE-COLOR:  #ffcc99;
 }
 
@@ -9,11 +9,16 @@ span,text,button, input, select, textarea{
 	fill:black;
 	font-size: 11px;
 }
+p{
+	font-size: 26px;
+	font-family: "Lucida Console", Courier, monospace;;
+	color: rgba(51, 45, 45, 0.5);
+	padding-left: 4px;
+}
 .outer-div{
 	background-color: #fff;
 	border-radius: 0px;
-	/* border: 2px solid #d5d5d5; */
-	border: 1px solid #d5d5d5;
+	/* border: 1px solid #d5d5d5; */
 }
 .block-div {
 	height: 100%;
@@ -25,4 +30,118 @@ span,text,button, input, select, textarea{
     position: absolute;
     top: 0px;
     bottom: 0px;
+	display: flex;
+	flex-direction: column;
 }
+
+#top-div{
+	width: 100%;
+	height: 10%;
+	flex: none;
+	display: flex;
+	flex-direction: row;
+}
+
+#bottom-div{
+	flex:1;
+	display: flex;
+	flex-direction: column;
+	align-items:center;
+}
+
+#logo-container{
+	left: 20%;
+	width: 60%;
+	height: 30%;
+	flex: none;
+	display: flex;
+	flex-direction: row;
+	align-items:center;
+	justify-content:center;
+}
+#law-icon{
+	width: 3em; height: 3em;
+	vertical-align: -0.15em;
+	fill: "#000";
+	overflow: hidden;
+}
+
+#search-container{
+	left: 20%;
+	top: 30%;
+	width: 60%;
+	height: 30%;
+	flex: none;
+	display: flex;
+	flex-direction: row;
+	align-items:center;
+	justify-content:center;
+}
+#search-border{
+	flex: none;
+	display: flex;
+	flex-direction: row;
+	align-items:center;
+	justify-content:center;
+	width: 80%;;
+	height: 50px;
+	border-radius: 25px;
+	border: 1px solid #d5d5d5;
+	padding: 0, 10px;
+	-webkit-box-shadow: rgb(206, 204, 204) 0px 0px 10px;
+   	-moz-box-shadow: rgb(206, 204, 204) 0px 0px 10px;
+   	box-shadow: rgb(206, 204, 204) 0px 0px 10px;
+}
+
+#search_input {
+	left: 5%;
+	width: 85%;
+	border: none;
+	font-size: 16px;
+	outline: none;
+	color: rgba(51, 45, 45, 0.8);
+}
+#search_input:focus{
+	box-shadow:none;
+}
+#search_input::placeholder {
+	color: rgba(51, 45, 45, 0.4);
+}
+
+#search-icon{
+	width: 2em; height: 2em;
+	margin-left: 10px;
+	vertical-align: -0.15em;
+	fill: "#000";
+	overflow: hidden;
+}
+
+#update-info{
+	font-size: 15px;
+	font-family: "Lucida Console", Courier, monospace;;
+	color: rgba(51, 45, 45, 0.8);
+}
+
+.aui-expander-content[aria-expanded=true] {
+    height: auto;
+    text-align: center;
+}
+#more-details-content p{
+	font-size: 15px;
+	font-family: "Lucida Console", Courier, monospace;;
+	color: rgba(51, 45, 45, 0.6);
+}
+.aui-page-notification-details-header-expander .aui-expander-trigger {
+    background-color: rgba(51, 45, 45, 0.05);
+    display: inline-block;
+    padding: 10px;
+    position: relative;
+}
+.aui-page-notification-details {
+    margin: 20px auto;
+    max-width: 90%;
+    width: 980px;
+}
+
+
+
