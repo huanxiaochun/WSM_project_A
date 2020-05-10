@@ -12,7 +12,8 @@
     <link rel="stylesheet" type="text/css" href="css/d3tip-example-styles.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-switch.css">
 	<link rel="stylesheet" type="text/css" href="css/wan-spinner.css">
-	<link rel="stylesheet" type="text/css" href="css/aui-prototyping.css">
+	<link rel="stylesheet" type="text/css" href="css/aui-prototyping.css" media="all">
+	<!-- <link rel="stylesheet" type="text/css" href="css/aui-prototyping.nodeps.css"> -->
 	<link rel="stylesheet" type="text/css" href="css/inspector.css">
 	<link href="css/jquery.contextMenu.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.css">
@@ -32,6 +33,7 @@
 	<script src="jslib/spin.min.js"></script>
 	<script src="jslib/svg-pan-zoom.js"></script>
 	<script src="jslib/aui-prototyping.js"></script>
+	<!-- <script src="jslib/aui-prototyping.nodeps.js"></script> -->
 	<script src="jslib/d3-contour.js"></script>
 	<script src="jslib/d3-contour.min.js"></script>
 	<script src="jslib/d3-scale-chromatic.v1.min.js"></script>
@@ -58,12 +60,24 @@
 		</div>
 		<div id="search-container">
 			<div id="search-border">
+				<form class="aui" id="mode-form">
+						<aui-select id="mode-select" name="mode">
+							<aui-option selected = "selected">Boolean</aui-option>
+							<aui-option>Tolerant</aui-option>
+							<aui-option>Query</aui-option>
+						</aui-select>
+				</form>
+				<!-- <select id="mode-select">
+					<option selected = "selected" value="Boolean">Boolean</option>
+					<option value="Tolerant">Tolerant</option>
+					<option value="Query">Query</option>
+				</select> -->
 				<input type="text" id="search_input" placeholder="请输入搜索词"/>
 				<svg class='icon' id='search-icon' aria-hidden='true'><use xlink:href='#icon-'></use></svg>
 			</div>
 		</div>
 		<div id="update-info">
-			<strong>Last updated</strong> <time datetime="2013-11-28T11:52+1100">11:52 AEST, November 28 2013</time>
+			<strong>Last updated &nbsp;</strong> <time datetime="2013-11-28T11:52+1100">11:52 AEST, November 28 2013</time>
 		</div>
 		<div class="aui-page-notification-details">
 			<div class="aui-page-notification-details-header">
@@ -81,7 +95,11 @@
 
 <!-- js -->
 <script>
-	
+	$('#search_input').bind('keypress', function(event){
+		if(event.keyCode == '13'){
+			alert($('#search_input').val());	
+		}
+	});
 </script>
 <script src="js/Boolean_search.js"></script>
 <script src="js/observer.js"></script>

@@ -1,6 +1,6 @@
 body {
 	color: #000;
-	background-color: #ffffff;
+	background-color: #fffffff5;
 	SCROLLBAR-FACE-COLOR:  #ffcc99;
 }
 
@@ -15,8 +15,13 @@ p{
 	color: rgba(51, 45, 45, 0.5);
 	padding-left: 4px;
 }
+a{
+	font-size: 14px;
+	font-family: "Lucida Console", Courier, monospace;;
+	color: rgba(51, 45, 45, 0.5);	
+}
 .outer-div{
-	background-color: #fff;
+	background-color: #ffffff;
 	border-radius: 0px;
 	/* border: 1px solid #d5d5d5; */
 }
@@ -36,7 +41,7 @@ p{
 
 #top-div{
 	width: 100%;
-	height: 10%;
+	height: 25%;
 	flex: none;
 	display: flex;
 	flex-direction: row;
@@ -52,7 +57,7 @@ p{
 #logo-container{
 	left: 20%;
 	width: 60%;
-	height: 30%;
+	height: 20%;
 	flex: none;
 	display: flex;
 	flex-direction: row;
@@ -68,9 +73,9 @@ p{
 
 #search-container{
 	left: 20%;
-	top: 30%;
+	top: 20%;
 	width: 60%;
-	height: 30%;
+	height: 20%;
 	flex: none;
 	display: flex;
 	flex-direction: row;
@@ -81,9 +86,9 @@ p{
 	flex: none;
 	display: flex;
 	flex-direction: row;
-	align-items:center;
+	align-items:center;	
 	justify-content:center;
-	width: 80%;;
+	width: 90%;;
 	height: 50px;
 	border-radius: 25px;
 	border: 1px solid #d5d5d5;
@@ -93,12 +98,52 @@ p{
    	box-shadow: rgb(206, 204, 204) 0px 0px 10px;
 }
 
+#mode-form{
+	width: 10%;
+	height: 60%;
+	right: 1%;
+	flex: none;
+	display: flex;
+	flex-direction: row;
+	align-items:center;	
+	justify-content:center;
+}
+
+#mode-select{
+	outline: none;
+	border-radius: 15px;
+	box-shadow:none;
+	font-family: "Lucida Console", Courier, monospace;
+	color: rgba(51, 45, 45, 0.8)
+}
+aui-select input.text, form.aui:not(.aui-legacy-forms) aui-select input.text {
+	box-shadow: none;
+	background-color: #D8DEF2;
+	border-radius: 15px;
+	text-align: center;
+	/* text-align-last: center;  */
+	padding: 0px;
+	outline: none;
+	font-family: "Lucida Console", Courier, monospace;
+	color: rgba(51, 45, 45, 0.8);
+	font-size: 12px;
+}
+aui-select, form.aui:not(.aui-legacy-forms) aui-select{
+	background-color:#D8DEF2;
+}
+aui-select:hover input{
+	background-color:#D8DEF2;
+	border-color:#D8DEF2;
+	color:rgba(51, 45, 45, 0.8)
+}
+
 #search_input {
-	left: 5%;
-	width: 85%;
+	left: 14%;
+	width: 80%;
 	border: none;
 	font-size: 16px;
 	outline: none;
+	background-color: #ffffff;
 	color: rgba(51, 45, 45, 0.8);
 }
 #search_input:focus{
@@ -110,16 +155,25 @@ p{
 
 #search-icon{
 	width: 2em; height: 2em;
-	margin-left: 10px;
+	/* margin-left: 10px; */
 	vertical-align: -0.15em;
 	fill: "#000";
 	overflow: hidden;
 }
 
 #update-info{
+	left: 20%;
+	top: 40%;
+	width: 60%;
+	height: 30%;
+	flex: none;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+	justify-content:center;
 	font-size: 15px;
 	font-family: "Lucida Console", Courier, monospace;;
-	color: rgba(51, 45, 45, 0.8);
+	color: rgba(51, 45, 45, 0.6);
 }
 
 .aui-expander-content[aria-expanded=true] {
@@ -138,10 +192,24 @@ p{
     position: relative;
 }
 .aui-page-notification-details {
-    margin: 20px auto;
+    margin: 10px auto;
     max-width: 90%;
-    width: 980px;
+    width: 800px;
 }
 
+aui-select button.aui-button, form.aui:not(.aui-legacy-forms) aui-select button.aui-button {
+    background: transparent;
+    outline: none;
+    bottom: 0;
+    box-sizing: border-box;
+    display: none;
+    height: 2.14285714em;
+    right: 0;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    vertical-align: top;
+    width: 22px;
+}
 
 
