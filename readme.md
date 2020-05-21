@@ -4,7 +4,8 @@
 │  
 ├─ client
 │  │  index.html
-│  │  
+│  │  resultDisplay.html
+|  |
 │  ├─css
 │  ├─data
 │  ├─font
@@ -12,6 +13,9 @@
 │  ├─image
 │  ├─js
 │  │      Boolean_search.js
+│  │      Tolerant_search.js
+│  │      Query_search.js
+|  |      Init.js
 │  │      observer.js
 │  │     
 │  └─jslib
@@ -77,3 +81,16 @@
 |5          | ename          |     CHAR(20)  | 申请执行人|
 |6          | courtName_phone|     TEXT      | 承办法院|
 
+## 使用步骤
+1. 安装tornado
+```
+    pip install -r requirements.txt
+```
+2. 启动服务器
+```
+    python server.py
+```
+3. chrome中打开127.0.0.1:8661看到如下页面
+![index](client/image/index.jpg)
+4. 输入查询之后跳转到结果页面（未完成）
+![index](client/image/result.jpg)
