@@ -17,3 +17,8 @@ function Observer() {
 
 var obs = Observer();
 var boolean_search = Boolean_search(obs);
+var tolerant_search = Tolerant_search(obs);
+var query_search = Query_search(obs);
+var init = Init(obs);
+
+

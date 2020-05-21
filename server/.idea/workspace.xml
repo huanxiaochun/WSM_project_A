@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7883d527-9f80-45a2-a9fb-a02bf923e222" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../client/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/../client/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../client/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/js/Boolean_search.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/js/Boolean_search.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/js/observer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/js/observer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -158,6 +163,7 @@
       <updated>1588792337855</updated>
       <workItem from="1588792343138" duration="30564000" />
       <workItem from="1588908153615" duration="12330000" />
+      <workItem from="1590039561396" duration="8486000" />
     </task>
     <servers />
   </component>
@@ -169,7 +175,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

@@ -17,8 +17,8 @@
 	<link href="css/jquery.contextMenu.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
-	<link rel="stylesheet" type="text/css" href="css/jquery-labelauty.css">
-	
+    <link rel="stylesheet" type="text/css" href="css/jquery-labelauty.css">
+
     <!-- js library -->
     <script src="jslib/jquery.min.js"></script>
     <script src="jslib/bootstrap-slider.min.js"></script>
@@ -43,20 +43,17 @@
 	<script src="https://at.alicdn.com/t/font_1154007_qmq3g7gz6sg.js"></script>
 
 	<!-- css -->
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/main_result.css">
 </head>
     
 
 <body>
 <div id="content-div">
-	<div id="top-div" class="outer-div">
-
-	</div>
-	<div id="bottom-div" class="outer-div">
+    <div id="top-div" class="outer-div">
 		<div id="logo-container">
 			<svg class='icon' id='law-icon' aria-hidden='true'><use xlink:href='#iconfalv'></use></svg><p><strong>CWLsystem</strong></p>
 		</div>
-		<div id="search-container">
+        <div id="search-container">
 			<div id="search-border">
 				<form class="aui" id="mode-form">
 						<aui-select id="mode-select" name="mode">
@@ -69,18 +66,57 @@
 				<svg class='icon' id='search-icon' aria-hidden='true'><use xlink:href='#icon-'></use></svg>
 			</div>
 		</div>
-		<div id="update-info">
-			<strong>Last updated &nbsp;</strong> <time datetime="2020-5-21T13:14+1100">13:14 CST, May 21 2020</time>
-		</div>
-		<div class="aui-page-notification-details">
-			<div class="aui-page-notification-details-header">	
-				<div class="aui-page-notification-details-header-expander">
-					<a id="more-details-trigger-1" data-replace-text="Hide detailed error message" class="aui-expander-trigger" aria-controls="more-details-content">Show detailed error message</a>
-				</div>
-			</div>
-	
-			<div id="more-details-content" class="aui-page-notification-details-content aui-expander-content" aria-expanded="false" aria-hidden="true">
-				<p>Nothing</p>
+	</div>
+	<div id="bottom-div" class="outer-div">
+		<div id="result-border">
+			<div id="result-list">
+				<table class="aui aui-table-sortable">
+					<thead>
+						<tr>
+							<th class="aui-table-column-issue-key">Issue key</th>
+							<th>Name</th>
+							<th>Age</th>
+							<th class="aui-table-column-unsortable">Description</th>
+						<tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>TEST-12</td>
+							<td>Cannot sort tables</td>
+							<td>2</td>
+							<td>Table sorting should be allowed</td>
+						</tr>
+						<tr>
+							<td>WIN-87</td>
+							<td>Issue Page doesn't load in IE</td>
+							<td>7</td>
+							<td>When loading issue page on IE it doesn't show</td>
+						</tr>
+						<tr>
+							<td>DRINK-7</td>
+							<td>Vending Machine is empty</td>
+							<td>1</td>
+							<td>Blocker</td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- <table>
+					<tr>
+						<th>Amount of fines</th>
+						<th>Registration dates</th>
+						<th>Content</th>
+					</tr>
+					<tr>
+						<td>Bill</td>
+						<td>Gates</td>
+						<td>Gates</td>
+					</tr>
+					<tr>
+						<td>Steven</td>
+						<td>Jobs</td>
+						<td>Gates</td>
+					</tr>
+				</table> -->
 			</div>
 		</div>
 	</div>
@@ -88,11 +124,20 @@
 
 <!-- js -->
 <script>
+	(function($){
+		$(window).on("load",function(){
+			$("#result-border").mCustomScrollbar({
+				axis: "y",
+				theme:"dark"
+			});
+		});
+	})(jQuery);
+
 	$('#search_input').bind('keypress', function(event){
 		if(event.keyCode == '13'){
 			var mode = $('#mode-select').val();
 			var value = $('#search_input').val();
-			window.location = 'resultDisplay.html?mode='+ mode + '&value=' + value + '';
+			search_value(mode, value);
 		}
 	});
 </script>

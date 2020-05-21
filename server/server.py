@@ -16,9 +16,55 @@ define("port", default=8661, help="run on the given port", type=int)
 client_file_root_path = os.path.join(os.path.split(__file__)[0], '../client')
 client_file_root_path = os.path.abspath(client_file_root_path)
 
+
+class Boolean_search(tornado.web.RequestHandler):
+    def get(self):
+        value = (json.loads(self.get_argument('value')))
+        print(value)
+
+        # TODO
+
+        result = "Boolean_search"
+
+        evt_unpacked = {'result': result}
+        evt = json.dumps(evt_unpacked)
+        self.write(evt)
+
+
+class Tolerant_search(tornado.web.RequestHandler):
+    def get(self):
+        value = (json.loads(self.get_argument('value')))
+        print(value)
+
+        # TODO
+
+        result = "Tolerant_search"
+
+        evt_unpacked = {'result': result}
+        evt = json.dumps(evt_unpacked)
+        self.write(evt)
+
+
+class Query_search(tornado.web.RequestHandler):
+    def get(self):
+        value = (json.loads(self.get_argument('value')))
+        print(value)
+
+        # TODO
+
+        result = "Query_search"
+
+        evt_unpacked = {'result': result}
+        evt = json.dumps(evt_unpacked)
+        self.write(evt)
+
+
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
+            (r'/Boolean_search', Boolean_search),
+            (r'/Tolerant_search', Tolerant_search),
+            (r'/Query_search', Query_search),
             (r'/(.*)', tornado.web.StaticFileHandler, {'path': client_file_root_path, 'default_filename': 'index.html'})
             # fetch client files
         ]

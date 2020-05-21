@@ -1,16 +1,14 @@
-function Boolean_search(Observer){
-    var boolean_search = {};
+function Tolerant_search(Observer){
+    var tolerant_search = {};
 
-    Observer.fireEvent("haha", "haha", Boolean_search);
-
-    boolean_search.onMessage = function(message, data, from){
-        if(message == "Boolean"){
+    tolerant_search.onMessage = function(message, data, from){
+        if(message == "Tolerant"){
             if(from == Init){
                 let obj = {};
                 obj.value = JSON.stringify(data);
                 $.ajax({
                     type: 'GET',
-                    url: 'Boolean_search',
+                    url: 'Tolerant_search',
                     data: obj,
                     dataType: 'json',
                     success: function(evt_data) {
@@ -25,6 +23,6 @@ function Boolean_search(Observer){
         }
     }
 
-    Observer.addView(boolean_search);
-    return boolean_search;
+    Observer.addView(tolerant_search);
+    return tolerant_search;
 }
