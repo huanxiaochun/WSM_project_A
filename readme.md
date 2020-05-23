@@ -92,5 +92,5 @@
 ```
 3. chrome中打开127.0.0.1:8661看到如下页面
 ![index](client/image/index.jpg)
-4. 输入查询之后跳转到结果页面（未完成）
+4. 输入查询之后跳转到结果页面, 点击表头进行数据排序
 ![index](client/image/result.jpg)
