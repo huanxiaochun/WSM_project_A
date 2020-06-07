@@ -30,7 +30,7 @@
 ```            
 
 
-## 数据库中的表
+## 数据库data.db中的表
 - ### ```instruments: 3089 records```
 
 |  Index    |  Attribute     |  Type         |   Detail   |

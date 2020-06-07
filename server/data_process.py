@@ -36,19 +36,19 @@ def deal_instruments(filepath):
     #     os.rename(oldname, newname)
 
     '''Create table instruments'''
-    sql = '''CREATE TABLE instruments
-            (ID   CHAR(100)  PRIMARY KEY   NOT NULL,
-            caseCode         TEXT,
-            Title          TEXT,
-            Type           TEXT,
-            Cause          TEXT,
-            Department     TEXT,
-            Level          TEXT,
-            ClosingDate    DATE,
-            Content        TEXT);'''
-    c.execute(sql)
-    print("Table created successfully...")
-    conn.commit()
+    # sql = '''CREATE TABLE instruments
+    #         (ID   CHAR(100)  PRIMARY KEY   NOT NULL,
+    #         caseCode         TEXT,
+    #         Title          TEXT,
+    #         Type           TEXT,
+    #         Cause          TEXT,
+    #         Department     TEXT,
+    #         Level          TEXT,
+    #         ClosingDate    DATE,
+    #         Content        TEXT);'''
+    # c.execute(sql)
+    # print("Table created successfully...")
+    # conn.commit()
 
     '''Save data to the database'''
     for file in tqdm(instruments_files, desc="insert instruments..."):
@@ -60,7 +60,12 @@ def deal_instruments(filepath):
                 if key == "结案日期":
                     data[key] = datetime.strptime(data[key].strip(), '%Y-%m-%d').date()
                 elif key == "content":
-                    data[key] = ' '.join(data[key].strip().split())
+                    lines = data[key].strip().split("\r")
+                    new_lines = []
+                    for line in lines:
+                        line = line.replace('\n', '').replace('\t', '').replace('\xa0', '').strip()
+                        new_lines.append(line)
+                    data[key] = ' '.join(new_lines)
                 else:
                     data[key] = data[key].strip()
 
@@ -91,31 +96,31 @@ def deal_data1(filepath):
     #     os.rename(oldname, newname)
 
     '''Create table data1'''
-    sql = '''CREATE TABLE data1
-                (ID            INT  PRIMARY KEY   NOT NULL,
-                iname          TEXT,
-                caseCode       TEXT,
-                age            INT,
-                sexy           CHAR(10),
-                cardNum        TEXT,
-                businessEntity     TEXT,
-                courtName          TEXT,
-                areaName    TEXT,
-                partyTypeName        TEXT,
-                gistId        TEXT,
-                regDate        DATE,
-                gistUnit        TEXT,
-                duty        TEXT,
-                performance        TEXT,
-                performedPart        TEXT,
-                unperformPart        TEXT,
-                disruptTypeName        TEXT,
-                publishDate          DATE,
-                qysler            TEXT);'''
-
-    c.execute(sql)
-    print("Table created successfully...")
-    conn.commit()
+    # sql = '''CREATE TABLE data1
+    #             (ID            INT  PRIMARY KEY   NOT NULL,
+    #             iname          TEXT,
+    #             caseCode       TEXT,
+    #             age            INT,
+    #             sexy           CHAR(10),
+    #             cardNum        TEXT,
+    #             businessEntity     TEXT,
+    #             courtName          TEXT,
+    #             areaName    TEXT,
+    #             partyTypeName        TEXT,
+    #             gistId        TEXT,
+    #             regDate        DATE,
+    #             gistUnit        TEXT,
+    #             duty        TEXT,
+    #             performance        TEXT,
+    #             performedPart        TEXT,
+    #             unperformPart        TEXT,
+    #             disruptTypeName        TEXT,
+    #             publishDate          DATE,
+    #             qysler            TEXT);'''
+    #
+    # c.execute(sql)
+    # print("Table created successfully...")
+    # conn.commit()
 
     keys = ['id', 'iname', 'caseCode', 'age', 'sexy', 'cardNum', 'businessEntity', 'courtName', 'areaName', 'partyTypeName',
      'gistId', 'regDate', 'gistUnit', 'duty', 'performance', 'performedPart', 'unperformPart', 'disruptTypeName',
@@ -133,8 +138,11 @@ def deal_data1(filepath):
                     # 2015年04月09日(str) ------> 2015-04-09(str) ------> 2015-04-09(date)
                     d = '-'.join(re.findall(r"\d+", data[key]))
                     data[key] = datetime.strptime(d.strip(), '%Y-%m-%d').date()
+                # 该字段为列表，列表里是字典，如
+                # [{'cardNum': '3408031970****2397', 'corporationtypename': '法定代表人', 'iname': '孙剑平'}, {'cardNum': '3408031953****286X', 'corporationtypename': '法定代表人', 'iname': '刘宝玲'}]
                 elif key == 'qysler':
                     data[key] = str(data[key])
+                # 该字段一般为str，但有时是list需处理
                 elif key == 'gistId' and isinstance(data[key], list):
                     data[key] = ' '.join(data[key])
                 else:
@@ -150,8 +158,8 @@ def deal_data1(filepath):
                     values.append(data[key])
 
             values = tuple(values)
-            sql = "insert into data1 values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-            c.execute(sql, values)
+            # sql = "insert into data1 values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            # c.execute(sql, values)
 
     conn.commit()
     print("Records created successfully...")
@@ -172,7 +180,7 @@ def deal_data2(filepath):
                 iaddress            TEXT,
                 imoney              TEXT,
                 ename               CHAR(20),
-                courtName_phone      TEXT);'''
+                courtName_phone     TEXT);'''
     c.execute(sql)
     print("Table created successfully...")
     conn.commit()
@@ -186,7 +194,7 @@ def deal_data2(filepath):
             full_path = os.path.join(root, filename)
 
             with open(full_path) as f:
-                data = json.load(f)
+                data = json.load(f, encoding='utf-8')
 
                 # for key in data:
                 #     if key == "执行标的金额（元）":
@@ -196,7 +204,8 @@ def deal_data2(filepath):
                 # Insert each record
                 values = []
                 for key in data:
-                    values.append(data[key])
+                    item = data[key].encode().decode('utf-8').replace(u'\xa0', ' ')
+                    values.append(item)
                 values = tuple(values)
                 sql = "insert into data2 values(?, ?, ?, ?, ?, ?)"
                 c.execute(sql, values)
@@ -210,10 +219,10 @@ def deal_data2(filepath):
 if __name__ == '__main__':
     # print("start processing instruments..")
     # deal_instruments(instruments_path)
-    #
-    # print("start processing data1..")
-    # deal_data1(data1_path)
-    #
+
+    print("start processing data1..")
+    deal_data1(data1_path)
+
     # print("start processing data2..")
     # deal_data2(data2_path)
 
