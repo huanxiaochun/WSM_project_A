@@ -1,8 +1,6 @@
 function Boolean_search(Observer){
     var boolean_search = {};
-
-    Observer.fireEvent("haha", "haha", Boolean_search);
-
+    
     boolean_search.onMessage = function(message, data, from){
         if(message == "Boolean"){
             if(from == Init){
