@@ -45,7 +45,8 @@ class Indexer(object):
         return text
 
     def process_tokens(self, tokens, docID):
-        for word in tokens:
+        tokens_ = [e.strip() for e in tokens]
+        for word in tokens_:
             term = word
             if term == '':
                 continue
@@ -115,6 +116,9 @@ class Indexer(object):
         #   'gistId', 'regDate', 'gistUnit', 'duty', 'performance',
         #   'performedPart', 'unperformPart', 'disruptTypeName',
         #   'publishDate', 'qysler']
+        #    id: Int
+        #    age: Int
+        #    qsler: List[{}]
 
         filenames = os.listdir(document_directory)
         for filename in tqdm(filenames, desc="Indexing data1"):
@@ -131,7 +135,7 @@ class Indexer(object):
                 for key in json_data.keys():
                     if key == 'id' or key == 'partyTypeName':
                         continue
-                    elif key =='iname' or key == 'caseCode' or key == 'regDate' or key == 'publishDate':
+                    elif key =='iname' or key == 'caseCode' or key == 'cardNum' or key == 'regDate' or key == 'publishDate':
                         text = json_data[key].strip()
                         tokens.append(text)
                     # 该字段为列表，列表里是字典，如
@@ -139,7 +143,11 @@ class Indexer(object):
                     # 'iname': '孙剑平'}, {'cardNum': '3408031953****286X',
                     # 'corporationtypename': '法定代表人', 'iname': '刘宝玲'}]
                     elif key == 'qysler':
-                        text = str(json_data[key])
+                        if len(json_data[key]) > 0:
+                            for person in json_data[key]:
+                                tokens.append(person['cardNum'])
+                                tokens.append(person['iname'])
+                                text = person['cardNum'] + person['corporationtypename'] + person['iname']
                     # 该字段一般为str，但有时是list需处理
                     elif key == 'gistId':
                         if isinstance(json_data[key], list):
@@ -147,6 +155,7 @@ class Indexer(object):
                             text = ''.join(json_data[key])
                         else:
                             text = json_data[key].strip()
+                            tokens.append(text)
                     else:
                         lines = str(json_data[key]).strip().split("\r")
                         text = self.process_lines(lines)
@@ -179,8 +188,10 @@ class Indexer(object):
 
                 tokens = []
                 for key in json_data.keys():
-                    if key == '案号' or key == '执行标的金额（元）':
+                    if key == '案号':
                         text = json_data[key].strip()
+                        tokens.append(text)
+                    elif key == '执行标的金额（元）':
                         tokens.append(text)
                     else:
                         lines = json_data[key].strip().split("\r")
@@ -270,4 +281,4 @@ if __name__ == '__main__':
     indexer.create_index([(instruments_path, 'instruments')])
     indexer.save_index(index_path)
 
-    # 2020.06.09
+    # 2020.06.10
