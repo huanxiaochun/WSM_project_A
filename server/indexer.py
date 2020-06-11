@@ -50,15 +50,16 @@ class Indexer(object):
         self.dictionary = {}    # key: term, value: [postings list]
 
     def remove_punct(self, text):
-         return re.sub(r"[%s]+" % (punctuation + ',()'), "", text)
+         return re.sub(r"[%s]+" % (punctuation + string.punctuation), "", text)
 
     def segment(self, text):
+         text = text.replace(' ', '')
          return list(jieba.cut(text, cut_all=False))
 
     def process_lines(self, lines):
         new_lines = []
         for line in lines:
-            line = line.replace('\n', '').replace('\t', '').replace('\xa0', '').strip()
+            line = line.replace('\n', '').replace('\t', '').replace('\xa0', '').replace(' ', '').strip()
             new_lines.append(line)
         text = ''.join(new_lines)
         return text
