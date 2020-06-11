@@ -2,3 +2,8 @@
 data/data.db
 index/ins_dictionary
 index/ins_postings
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
+.idea/WSM_project_A.iml
+client/css/main_result.css
