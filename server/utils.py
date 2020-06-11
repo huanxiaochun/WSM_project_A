@@ -12,9 +12,13 @@ import timeit
 import argparse
 import os
 import json
+import sqlite3
 
 RECORD_TIME = False # toggling for recording the time taken for indexer
 BYTE_SIZE = 4       # docID is in int
+
+root_path = os.path.join(os.path.split(__file__)[0], '../data')
+root_path = os.path.abspath(root_path)
 
 
 def load_dictionary(dict_file):
@@ -84,6 +88,23 @@ def load_posting_list(post_file, length, offset):
         docID = struct.unpack('I', posting)[0]
         posting_list.append(docID)
     return posting_list
+
+
+def search_Doc(Dlist, table_name):
+    conn = sqlite3.connect(os.path.join(root_path, 'data.db'))
+    conn.text_factory = str
+    print("Opened database successfully...")
+    c = conn.cursor()
+
+    str_list = str(tuple(Dlist))
+    if len(Dlist) == 1:
+        str_list = str_list.replace(",", "")
+
+    sql = "select * from " + table_name + " where DocID in " + str_list
+    c.execute(sql)
+    data = c.fetchall()
+    conn.close()
+    return data
 
 
 def process_query(query, dictionary, post_file, indexed_docIDs):

@@ -12,9 +12,16 @@ import codecs
 import io
 import math
 import nltk
+from utils import *
 TOTAL_DOCS = 3089
+THRESH = 200
+TABLE_NAME = "instruments"
+
 DICTIONARY_FILE = os.path.join('../index', 'ins_dictionary')
 POSTINGS_FILE = os.path.join('../index', 'ins_postings')
+
+root_path = os.path.join(os.path.split(__file__)[0], '../data')
+root_path = os.path.abspath(root_path)
 
 
 def process_tokens(tokens):
@@ -31,7 +38,6 @@ def process_tokens(tokens):
         else:
             results.append(term)
     return results
-
 
 
 def load_posting_list(post_file, length, offset):
@@ -84,10 +90,9 @@ def process_lines(lines):
     text = ''.join(new_lines)
     return text
 
+
 def save_tfdict(doc_tfdict_path):
     doc_tfdict_path = os.path.join(doc_tfdict_path, "doc_tfdict.json")
-    root_path = os.path.join(os.path.split(__file__)[0], '../data')
-    root_path = os.path.abspath(root_path)
     conn = sqlite3.connect(os.path.join(root_path, 'data.db'))
     conn.text_factory = str
     print("Opened database successfully...")
@@ -153,10 +158,15 @@ def query_search(query):
     docscorc_list = [(int(doc), score) for doc, score in docscore_dict.items()]
 
     def takeSecond(elem):
-        return elem[0]
+        return elem[1]
 
     docscorc_list.sort(key=takeSecond)
-    return [x[0] for x in docscorc_list]
+    Doclist = [x[0] for x in docscorc_list]
+    if len(Doclist) >= THRESH:
+        Doclist = Doclist[: THRESH]
+
+    result = search_Doc(Doclist, TABLE_NAME)
+    return result
 
 
 if __name__ == '__main__':
@@ -172,7 +182,6 @@ if __name__ == '__main__':
                   % index_path)
             os.makedirs(index_path)
 
-    save_tfdict(index_path)
+    # save_tfdict(index_path)
     result = query_search("该合同系双方真实意思表示，被告没有利用强势地位强行与原告签订合同。")
     print(result)
-

@@ -9,7 +9,12 @@ function Init(Observer){
 
     var mode = getParams("mode");
     var value = getParams("value");
+    console.log(mode);
+    console.log(value);
+    // $("#mode-select").find("option[text=" + mode + "]").attr("selected", true);
+    // $('#mode-select').val(mode);
     $("#search_input").val(value);
+    $('#mode-select').val(mode);
 
     if(mode == "Boolean"){
         Observer.fireEvent("Boolean", value, Init);
