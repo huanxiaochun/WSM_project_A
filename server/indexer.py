@@ -64,8 +64,14 @@ class Indexer(object):
         return text
 
     def process_tokens(self, tokens, docID):
+<<<<<<< HEAD
         for word in tokens:
             term = word.strip()
+=======
+        tokens_ = [e.strip() for e in tokens]
+        for word in tokens_:
+            term = word
+>>>>>>> 895a4cf3dc5cd73b296c055c2b1cc21e415d8dfe
             if term == '':
                 continue
             if (IGNORE_STOPWORDS and term in self.stopwords):
@@ -119,7 +125,11 @@ class Indexer(object):
         #   'gistId', 'regDate', 'gistUnit', 'duty', 'performance',
         #   'performedPart', 'unperformPart', 'disruptTypeName',
         #   'publishDate', 'qysler']
+        #    id: Int
+        #    age: Int
+        #    qsler: List[{}]
 
+<<<<<<< HEAD
         sql = "select * from " + table_name
         c.execute(sql)
         data = c.fetchall()
@@ -145,11 +155,62 @@ class Indexer(object):
             self.process_tokens(tokens, data[i][0])
 
     def deal_data2(self, table_name):
+=======
+        filenames = os.listdir(document_directory)
+        for filename in tqdm(filenames, desc="Indexing data1"):
+            docID = self.docs_indexed
+
+            filepath = os.path.join(document_directory, filename)
+            self.id2file[docID] = filepath
+
+            if (os.path.isfile(filepath)):
+                fo = open(filepath, 'r', encoding='utf8')
+                json_data = json.load(fo)
+
+                tokens = []
+                for key in json_data.keys():
+                    if key == 'id' or key == 'partyTypeName':
+                        continue
+                    elif key =='iname' or key == 'caseCode' or key == 'cardNum' or key == 'regDate' or key == 'publishDate':
+                        text = json_data[key].strip()
+                        tokens.append(text)
+                    # 该字段为列表，列表里是字典，如
+                    # [{'cardNum': '3408031970****2397', 'corporationtypename': '法定代表人',
+                    # 'iname': '孙剑平'}, {'cardNum': '3408031953****286X',
+                    # 'corporationtypename': '法定代表人', 'iname': '刘宝玲'}]
+                    elif key == 'qysler':
+                        if len(json_data[key]) > 0:
+                            for person in json_data[key]:
+                                tokens.append(person['cardNum'])
+                                tokens.append(person['iname'])
+                                text = person['cardNum'] + person['corporationtypename'] + person['iname']
+                    # 该字段一般为str，但有时是list需处理
+                    elif key == 'gistId':
+                        if isinstance(json_data[key], list):
+                            tokens += json_data[key]
+                            text = ''.join(json_data[key])
+                        else:
+                            text = json_data[key].strip()
+                            tokens.append(text)
+                    else:
+                        lines = str(json_data[key]).strip().split("\r")
+                        text = self.process_lines(lines)
+
+                    text_clean = self.remove_punct(text)
+                    tokens += self.segment(text_clean)
+
+                self.process_tokens(tokens, docID)
+                self.docs_indexed += 1
+                fo.close()
+
+    def deal_data2(self, document_directory):
+>>>>>>> 895a4cf3dc5cd73b296c055c2b1cc21e415d8dfe
         '''
         Deal with data2 files
         :param document_directory: data2 table name
         :return: None
         '''
+<<<<<<< HEAD
         #   keys = ['DocID', 'caseCode', 'iname', 'iaddress', 'imoney', 'ename', 'courtName_phone']
 
         sql = "select * from " + table_name
@@ -175,6 +236,38 @@ class Indexer(object):
                 tokens += self.segment(text_clean)
 
             self.process_tokens(tokens, data[i][0])
+=======
+        #   keys = ['案号', '被执行人', '被执行人地址', '执行标的金额（元）', '申请执行人', '承办法院、联系电话']
+
+        filenames = os.listdir(document_directory)
+        for filename in tqdm(filenames, desc="Indexing data2"):
+            docID = self.docs_indexed
+
+            filepath = os.path.join(document_directory, filename)
+            self.id2file[docID] = filepath
+
+            if (os.path.isfile(filepath)):
+                fo = open(filepath, 'r', encoding='utf8')
+                json_data = json.load(fo)
+
+                tokens = []
+                for key in json_data.keys():
+                    if key == '案号':
+                        text = json_data[key].strip()
+                        tokens.append(text)
+                    elif key == '执行标的金额（元）':
+                        tokens.append(text)
+                    else:
+                        lines = json_data[key].strip().split("\r")
+                        text = self.process_lines(lines)
+
+                    text_clean = self.remove_punct(text)
+                    tokens += self.segment(text_clean)
+
+                self.process_tokens(tokens, docID)
+                self.docs_indexed += 1
+                fo.close()
+>>>>>>> 895a4cf3dc5cd73b296c055c2b1cc21e415d8dfe
 
     def create_index(self, documents):
         '''
@@ -246,5 +339,9 @@ if __name__ == '__main__':
     # indexer.create_index([(instruments_table, 'instruments')])
     indexer.save_index(index_path)
 
+<<<<<<< HEAD
     conn.close()
     # 2020.06.09
+=======
+    # 2020.06.10
+>>>>>>> 895a4cf3dc5cd73b296c055c2b1cc21e415d8dfe
