@@ -67,13 +67,13 @@ class Indexer(object):
         :return:
         '''
         #       id
-        #       案号
+        #       案号 *
         #       标题
-        #       文书类别
-        #       案由
-        #       承办部门
-        #       级别
-        #       结案日期
+        #       文书类别  *
+        #       案由 *
+        #       承办部门 *
+        #       级别 *
+        #       结案日期 *
 
         filenames = os.listdir(document_directory)
         for filename in tqdm(filenames, desc="Indexing instruments"):
