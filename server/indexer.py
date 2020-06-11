@@ -1,23 +1,44 @@
 #!/usr/bin/python
 import nltk
 import re
-import sys
-import getopt
 import codecs
-import os
 import struct
-import timeit
+import string
 import os
-import json 
 import jieba
 from zhon.hanzi import punctuation
 import re
-import argparse
-from tqdm import tqdm
+import sqlite3
+from tqdm import trange
 
-IGNORE_STOPWORDS = True     # toggling the option for ignoring stopwords
+IGNORE_STOPWORDS = True      # toggling the option for ignoring stopwords
 IGNORE_NUMBERS = False       # toggling the option for ignoring numbers
-BYTE_SIZE = 4               # docID is in int
+BYTE_SIZE = 4                # docID is in int
+
+root_path = os.path.join(os.path.split(__file__)[0], '../data')
+root_path = os.path.abspath(root_path)
+
+conn = sqlite3.connect(os.path.join(root_path, 'data.db'))
+conn.text_factory = str
+print("Opened database successfully...")
+c = conn.cursor()
+
+
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        pass
+
+    try:
+        import unicodedata
+        unicodedata.numeric(s)
+        return True
+    except (TypeError, ValueError):
+        pass
+
+    return False
 
 
 class Indexer(object):
@@ -26,12 +47,10 @@ class Indexer(object):
 
     def reset(self):
         self.stopwords = nltk.corpus.stopwords.words('chinese')
-        self.docs_indexed = 0  # counter for the number of docs indexed
-        self.dictionary = {}  # key: term, value: [postings list]
-        self.id2file = {}
+        self.dictionary = {}    # key: term, value: [postings list]
 
     def remove_punct(self, text):
-        return re.sub(r"[%s]+" % (punctuation + ',()'), "", text)
+         return re.sub(r"[%s]+" % (punctuation + ',()'), "", text)
 
     def segment(self, text):
          return list(jieba.cut(text, cut_all=False))
@@ -46,7 +65,7 @@ class Indexer(object):
 
     def process_tokens(self, tokens, docID):
         for word in tokens:
-            term = word
+            term = word.strip()
             if term == '':
                 continue
             if (IGNORE_STOPWORDS and term in self.stopwords):
@@ -60,138 +79,102 @@ class Indexer(object):
                 if (self.dictionary[term][-1] != docID):
                     self.dictionary[term].append(docID)
 
-    def deal_instruments(self, document_directory):
+    def deal_instruments(self, table_name):
         '''
         Deal with instruments files
-        :param document_directory: instruments path
+        :param table_name: instruments table name
         :return:
         '''
-        #       id
-        #       案号 *
-        #       标题
-        #       文书类别  *
-        #       案由 *
-        #       承办部门 *
-        #       级别 *
-        #       结案日期 *
+        # ["DocID", "ID", "caseCode", "Title", "Type", "Cause", "Department", "Level", "ClosingDate", "Content"]
 
-        filenames = os.listdir(document_directory)
-        for filename in tqdm(filenames, desc="Indexing instruments"):
-            docID = self.docs_indexed
+        sql = "select * from " + table_name
+        c.execute(sql)
+        data = c.fetchall()
 
-            filepath = os.path.join(document_directory, filename)
-            self.id2file[docID] = filepath
+        for i in trange(len(data), desc="instruments..."):
+            tokens = []
+            for j in range(len(data[0])):
+                if j == 0 or j == 1:  # DocID   ID
+                    continue
+                elif j == 2 or j == 4 or j == 5 or j == 6 or j == 7 or j == 8:
+                    text = str(data[i][j]).strip()
+                    tokens.append(text)
+                else:
+                    lines = str(data[i][j]).strip().split("\r")
+                    text = self.process_lines(lines)
 
-            if (os.path.isfile(filepath)):
-                fo = open(filepath, 'r', encoding='utf8')
-                json_data = json.load(fo)
+                text_clean = self.remove_punct(text)
+                tokens += self.segment(text_clean)
 
-                tokens = []
-                for key in json_data.keys():
-                    if key == 'id':
-                        continue
-                    elif key == '案号' or key == '结案日期':
-                        text = json_data[key].strip()
-                        tokens.append(text)
-                    else:
-                        lines = json_data[key].strip().split("\r")
-                        text = self.process_lines(lines)
+            self.process_tokens(tokens, data[i][0])
 
-                    text_clean = self.remove_punct(text)
-                    tokens += self.segment(text_clean)
-
-                self.process_tokens(tokens, docID)
-                self.docs_indexed += 1
-                fo.close()
-
-    def deal_data1(self, document_directory):
+    def deal_data1(self, table_name):
         '''
         Deal with data1 files
-        :param document_directory: data1 path
+        :param document_directory: data1 table name
         :return: None
         '''
-        #   keys = ['id', 'iname', 'caseCode', 'age', 'sexy',
-        #   'cardNum', 'courtName', 'areaName', 'partyTypeName',
+        #   keys = ['DocID', 'ID', 'iname', 'caseCode', 'age', 'sexy',
+        #   'cardNum', 'businessEntity', 'courtName', 'areaName', 'partyTypeName',
         #   'gistId', 'regDate', 'gistUnit', 'duty', 'performance',
         #   'performedPart', 'unperformPart', 'disruptTypeName',
         #   'publishDate', 'qysler']
 
-        filenames = os.listdir(document_directory)
-        for filename in tqdm(filenames, desc="Indexing data1"):
-            docID = self.docs_indexed
+        sql = "select * from " + table_name
+        c.execute(sql)
+        data = c.fetchall()
 
-            filepath = os.path.join(document_directory, filename)
-            self.id2file[docID] = filepath
+        for i in trange(len(data), desc="data1..."):
+            tokens = []
+            for j in range(len(data[0])):
+                if j == 0 or j == 1 or j == 10:  # DocID   ID   partyTypeName
+                    continue
+                elif j == 2 or j == 3 or j == 8 or j == 9 or j == 12 or j == 13 or j == 15 or j == 19:
+                    text = str(data[i][j]).strip()
+                    tokens.append(text)
+                elif j == 11:  # gistId
+                    text = data[i][j].strip()
+                    tokens += text.split()
+                else:
+                    lines = str(data[i][j]).strip().split("\r")
+                    text = self.process_lines(lines)
 
-            if (os.path.isfile(filepath)):
-                fo = open(filepath, 'r', encoding='utf8')
-                json_data = json.load(fo)
+                text_clean = self.remove_punct(text)
+                tokens += self.segment(text_clean)
 
-                tokens = []
-                for key in json_data.keys():
-                    if key == 'id' or key == 'partyTypeName':
-                        continue
-                    elif key =='iname' or key == 'caseCode' or key == 'regDate' or key == 'publishDate':
-                        text = json_data[key].strip()
-                        tokens.append(text)
-                    # 该字段为列表，列表里是字典，如
-                    # [{'cardNum': '3408031970****2397', 'corporationtypename': '法定代表人',
-                    # 'iname': '孙剑平'}, {'cardNum': '3408031953****286X',
-                    # 'corporationtypename': '法定代表人', 'iname': '刘宝玲'}]
-                    elif key == 'qysler':
-                        text = str(json_data[key])
-                    # 该字段一般为str，但有时是list需处理
-                    elif key == 'gistId':
-                        if isinstance(json_data[key], list):
-                            tokens += json_data[key]
-                            text = ''.join(json_data[key])
-                        else:
-                            text = json_data[key].strip()
-                    else:
-                        lines = str(json_data[key]).strip().split("\r")
-                        text = self.process_lines(lines)
+            self.process_tokens(tokens, data[i][0])
 
-                    text_clean = self.remove_punct(text)
-                    tokens += self.segment(text_clean)
-
-                self.process_tokens(tokens, docID)
-                self.docs_indexed += 1
-                fo.close()
-
-    def deal_data2(self, document_directory):
+    def deal_data2(self, table_name):
         '''
         Deal with data2 files
-        :param document_directory: data2 path
+        :param document_directory: data2 table name
         :return: None
         '''
-        #   keys = ['案号', '被执行人', '被执行人地址', '执行标的金额（元）', '申请执行人', '承办法院、联系电话']
+        #   keys = ['DocID', 'caseCode', 'iname', 'iaddress', 'imoney', 'ename', 'courtName_phone']
 
-        filenames = os.listdir(document_directory)
-        for filename in tqdm(filenames, desc="Indexing data2"):
-            docID = self.docs_indexed
+        sql = "select * from " + table_name
+        c.execute(sql)
+        data = c.fetchall()
 
-            filepath = os.path.join(document_directory, filename)
-            self.id2file[docID] = filepath
+        for i in trange(len(data), desc="data2..."):
+            tokens = []
+            for j in range(len(data[0])):
+                if j == 0:  # DocID
+                    continue
+                elif j == 1 or j == 2 or j == 5:
+                    text = str(data[i][j]).strip()
+                    tokens.append(text)
+                elif j == 6:  # courtName_phone  only save court name
+                    text = data[i][j].strip().split()[0]
+                    tokens.append(text)
+                else:
+                    lines = str(data[i][j]).strip().split("\r")
+                    text = self.process_lines(lines)
 
-            if (os.path.isfile(filepath)):
-                fo = open(filepath, 'r', encoding='utf8')
-                json_data = json.load(fo)
+                text_clean = self.remove_punct(text)
+                tokens += self.segment(text_clean)
 
-                tokens = []
-                for key in json_data.keys():
-                    if key == '案号' or key == '执行标的金额（元）':
-                        text = json_data[key].strip()
-                        tokens.append(text)
-                    else:
-                        lines = json_data[key].strip().split("\r")
-                        text = self.process_lines(lines)
-
-                    text_clean = self.remove_punct(text)
-                    tokens += self.segment(text_clean)
-
-                self.process_tokens(tokens, docID)
-                self.docs_indexed += 1
-                fo.close()
+            self.process_tokens(tokens, data[i][0])
 
     def create_index(self, documents):
         '''
@@ -199,13 +182,13 @@ class Indexer(object):
         :param documents: List[tuple(str, str)]
         :return: None
         '''
-        for document_directory, document_type in documents:
+        for table_name, document_type in documents:
             if document_type == 'instruments':
-                self.deal_instruments(document_directory)
+                self.deal_instruments(table_name)
             elif document_type == 'data1':
-                self.deal_data1(document_directory)
+                self.deal_data1(table_name)
             elif document_type == 'data2':
-                self.deal_data2(document_directory)
+                self.deal_data2(table_name)
             else:
                 pass
 
@@ -222,7 +205,7 @@ class Indexer(object):
         dict_file = codecs.open(os.path.join(index_directory, 'dictionary'), 'w', encoding='utf-8')
         post_file = open(os.path.join(index_directory, 'postings'), 'wb')
 
-        byte_offset = 0 # byte offset for pointers to postings file
+        byte_offset = 0      # byte offset for pointers to postings file
 
         # build dictionary file and postings file
         for term, postings_list in self.dictionary.items():
@@ -237,23 +220,16 @@ class Indexer(object):
             dict_file.write(term + " " + str(df) + " " + str(byte_offset) + "\n")
             byte_offset += BYTE_SIZE * df
 
-
-        with open(os.path.join(index_directory, 'id2file.json'), 'w') as f:
-            json.dump(self.id2file, f)
-
         # close files
         dict_file.close()
         post_file.close()
 
-        print('# indexed documents = ', self.docs_indexed)
-
 
 if __name__ == '__main__':
-
     index_path = '../index'
-    instruments_path = '../data/instruments'
-    data1_path = '../data/data1'
-    data2_path = '../data/data2'
+    instruments_table = "instruments"
+    data1_table = "data1"
+    data2_table = "data2"
 
     if os.path.exists(index_path):
         print("Folder %s exists." % index_path)
@@ -266,8 +242,8 @@ if __name__ == '__main__':
             os.makedirs(index_path)
 
     indexer = Indexer()
-    # indexer.create_index([(data1_path, 'data1'), (data2_path, 'data2')])
-    indexer.create_index([(instruments_path, 'instruments')])
+    indexer.create_index([(data1_table, 'data1'), (data2_table, 'data2')])
+    # indexer.create_index([(instruments_table, 'instruments')])
     indexer.save_index(index_path)
 
     # 2020.06.09

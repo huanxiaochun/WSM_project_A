@@ -30,7 +30,10 @@ def load_dictionary(dict_file):
     for entry in dict_file.read().split('\n'):
         # if entry is not empty (last line in dictionary file is empty)
         if (entry):
+            print(entry)
+            print(len(entry))
             token = entry.split(" ")
+            print(token)
             term = token[0]
             df = int(token[1])
             offset = int(token[2])
@@ -133,9 +136,14 @@ def shunting_yard(infix_tokens):
 def process_query(query, dictionary, post_file):
     # stemmer = nltk.stem.porter.PorterStemmer()  # instantiate stemmer
     # prepare query list
+    query = query.replace(' ', '')
+    query = query.replace('AND', ' AND ')
+    query = query.replace('OR', ' OR ')
+    query = query.replace('NOT', ' NOT ')
     query = query.replace('(', '( ')
     query = query.replace(')', ' )')
-    query = query.split(' ')
+    query_old = query.split(' ')
+    query = [x for x in query_old if x.strip()] ##去掉空值
 
     results_stack = []
     postfix_queue = collections.deque(shunting_yard(query))  # get query in postfix notation as a queue
@@ -297,3 +305,8 @@ def boolean_NOT(right_list, indexed_docIDs):
         elif (r_index + 1 < len(right_operand)):
             r_index += 1
     return docscore_list
+
+
+if __name__ == '__main__':
+    result = tolerant_search("上海徐汇人民法院 AND（2017）沪0112执5983号")
+    print(result)

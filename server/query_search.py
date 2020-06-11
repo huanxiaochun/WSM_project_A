@@ -2,7 +2,7 @@ import sqlite3
 import os
 from tqdm import trange
 import struct
-from indexer import BYTE_SIZE, IGNORE_NUMBERS, IGNORE_STOPWORDS
+from indexer import BYTE_SIZE, IGNORE_NUMBERS, IGNORE_STOPWORDS, is_number
 from zhon.hanzi import punctuation
 import re
 import jieba
@@ -15,23 +15,6 @@ import nltk
 TOTAL_DOCS = 3089
 DICTIONARY_FILE = os.path.join('../index', 'ins_dictionary')
 POSTINGS_FILE = os.path.join('../index', 'ins_postings')
-
-
-def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        pass
-
-    try:
-        import unicodedata
-        unicodedata.numeric(s)
-        return True
-    except (TypeError, ValueError):
-        pass
-
-    return False
 
 
 def process_tokens(tokens):
