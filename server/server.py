@@ -10,6 +10,9 @@ from tornado.options import define, options
 import json
 import os
 
+from query_search import *
+from tolerant_search import *
+
 define("port", default=8661, help="run on the given port", type=int)
 
 # the path to server html, js, css files
@@ -50,9 +53,7 @@ class Query_search(tornado.web.RequestHandler):
         value = (json.loads(self.get_argument('value')))
         print(value)
 
-        # TODO
-
-        result = "Query_search"
+        result = query_search(value)
 
         evt_unpacked = {'result': result}
         evt = json.dumps(evt_unpacked)

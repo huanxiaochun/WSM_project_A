@@ -15,7 +15,7 @@ IGNORE_STOPWORDS = True      # toggling the option for ignoring stopwords
 IGNORE_NUMBERS = False       # toggling the option for ignoring numbers
 BYTE_SIZE = 4                # docID is in int
 
-root_path = os.path.join(os.path.split(__file__)[0], '../data')
+root_path = os.path.join(os.path.split(__file__)[0], '../../data')
 root_path = os.path.abspath(root_path)
 
 conn = sqlite3.connect(os.path.join(root_path, 'data.db'))
