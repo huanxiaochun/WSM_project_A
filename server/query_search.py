@@ -72,17 +72,17 @@ def remove_punct(text):
 
 
 def segment(text):
+     text = text.replace(' ', '').replace('\xa0', '')
      return list(jieba.cut(text, cut_all=False))
 
 
 def process_lines(lines):
     new_lines = []
     for line in lines:
-        line = line.replace('\n', '').replace('\t', '').replace('\xa0', '').strip()
+        line = line.replace('\n', '').replace('\t', '').replace('\xa0', '').replace(' ', '').strip()
         new_lines.append(line)
     text = ''.join(new_lines)
     return text
-
 
 def save_tfdict(doc_tfdict_path):
     doc_tfdict_path = os.path.join(doc_tfdict_path, "doc_tfdict.json")
@@ -160,19 +160,19 @@ def query_search(query):
 
 
 if __name__ == '__main__':
-    # index_path = '../index'
-    # if os.path.exists(index_path):
-    #     print("Folder %s exists." % index_path)
-    # else:
-    #     try:
-    #         print("Creating new folder: %s." % index_path)
-    #         os.mkdir(index_path)
-    #     except Exception as e:
-    #         print("Creating new folder: %s."
-    #               % index_path)
-    #         os.makedirs(index_path)
-    #
-    # save_tfdict(index_path)
+    index_path = '../index'
+    if os.path.exists(index_path):
+        print("Folder %s exists." % index_path)
+    else:
+        try:
+            print("Creating new folder: %s." % index_path)
+            os.mkdir(index_path)
+        except Exception as e:
+            print("Creating new folder: %s."
+                  % index_path)
+            os.makedirs(index_path)
+
+    save_tfdict(index_path)
     result = query_search("该合同系双方真实意思表示，被告没有利用强势地位强行与原告签订合同。")
     print(result)
 
