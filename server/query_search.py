@@ -153,7 +153,7 @@ def query_search(query):
     docscorc_list = [(int(doc), score) for doc, score in docscore_dict.items()]
 
     def takeSecond(elem):
-        return elem[0]
+        return elem[1]
 
     docscorc_list.sort(key=takeSecond)
     return [x[0] for x in docscorc_list]
