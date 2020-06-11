@@ -53,7 +53,7 @@ class Indexer(object):
          return re.sub(r"[%s]+" % (punctuation + string.punctuation), "", text)
 
     def segment(self, text):
-         text = text.replace(' ', '')
+         text = text.replace(' ', '').replace('\xa0', '')
          return list(jieba.cut(text, cut_all=False))
 
     def process_lines(self, lines):
