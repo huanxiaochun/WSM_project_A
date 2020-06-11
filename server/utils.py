@@ -107,7 +107,7 @@ def process_query(query, dictionary, post_file, indexed_docIDs):
 
     results_stack = []
     postfix_queue = collections.deque(shunting_yard(query)) # get query in postfix notation as a queue
-    print (postfix_queue)
+#     print (postfix_queue)
 
     while postfix_queue:
         token = postfix_queue.popleft()
