@@ -98,7 +98,7 @@ class Indexer(object):
                 if j == 0 or j == 1:  # DocID   ID
                     continue
                 elif j == 2 or j == 4 or j == 5 or j == 6 or j == 7 or j == 8:
-                    text = str(data[i][j]).strip()
+                    text = str(data[i][j]).strip().replace(' ', '').replace('\xa0', '')
                     tokens.append(text)
                 else:
                     lines = str(data[i][j]).strip().split("\r")
@@ -131,10 +131,10 @@ class Indexer(object):
                 if j == 0 or j == 1 or j == 10:  # DocID   ID   partyTypeName
                     continue
                 elif j == 2 or j == 3 or j == 8 or j == 9 or j == 12 or j == 13 or j == 15 or j == 19:
-                    text = str(data[i][j]).strip()
+                    text = str(data[i][j]).strip().replace(' ', '').replace('\xa0', '')
                     tokens.append(text)
                 elif j == 11:  # gistId
-                    text = data[i][j].strip()
+                    text = data[i][j].strip().replace(' ', '').replace('\xa0', '')
                     tokens += text.split()
                 else:
                     lines = str(data[i][j]).strip().split("\r")
@@ -163,10 +163,10 @@ class Indexer(object):
                 if j == 0:  # DocID
                     continue
                 elif j == 1 or j == 2 or j == 5:
-                    text = str(data[i][j]).strip()
+                    text = str(data[i][j]).strip().replace(' ', '').replace('\xa0', '')
                     tokens.append(text)
                 elif j == 6:  # courtName_phone  only save court name
-                    text = data[i][j].strip().split()[0]
+                    text = data[i][j].strip().split()[0].replace(' ', '').replace('\xa0', '')
                     tokens.append(text)
                 else:
                     lines = str(data[i][j]).strip().split("\r")

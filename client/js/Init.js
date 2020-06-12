@@ -9,10 +9,7 @@ function Init(Observer){
 
     var mode = getParams("mode");
     var value = getParams("value");
-    console.log(mode);
-    console.log(value);
-    // $("#mode-select").find("option[text=" + mode + "]").attr("selected", true);
-    // $('#mode-select').val(mode);
+
     $("#search_input").val(value);
     $('#mode-select').val(mode);
 
@@ -115,7 +112,7 @@ function compare(property, order){
 }
 
 function updateTable(table){
-    $("#result-table  tr:not(:first)").remove();;      // 删去除表头之外的数据
+    $("#result-table  tr:not(:first)").remove();      // 删去除表头之外的数据
     // 新建单元格
     for(var i = 1; i <= table.length; i++){
         var insertTr = document.getElementById("result-table").insertRow(i);

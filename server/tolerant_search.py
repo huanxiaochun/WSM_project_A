@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# coding=gbk
 from indexer import BYTE_SIZE
 import struct
 import codecs
@@ -30,7 +32,7 @@ def load_dictionary(dict_file):
     for entry in dict_file.read().split('\n'):
         # if entry is not empty (last line in dictionary file is empty)
         if (entry):
-            print(entry)
+            print(entry.replace(' ', ''))
             print(len(entry))
             token = entry.split(" ")
             print(token)
@@ -143,7 +145,7 @@ def process_query(query, dictionary, post_file):
     query = query.replace('(', '( ')
     query = query.replace(')', ' )')
     query_old = query.split(' ')
-    query = [x for x in query_old if x.strip()] ##å»æ‰ç©ºå€¼
+    query = [x for x in query_old if x.strip()]  # È¥µô¿ÕÖµ
 
     results_stack = []
     postfix_queue = collections.deque(shunting_yard(query))  # get query in postfix notation as a queue
@@ -308,5 +310,5 @@ def boolean_NOT(right_list, indexed_docIDs):
 
 
 if __name__ == '__main__':
-    result = tolerant_search("ä¸Šæµ·å¾æ±‡äººæ°‘æ³•é™¢ ANDï¼ˆ2017ï¼‰æ²ª0112æ‰§5983å·")
+    result = tolerant_search("ÉÏº£Ğì»ãÈËÃñ·¨Ôº AND£¨2017£©»¦0112Ö´5983ºÅ")
     print(result)
