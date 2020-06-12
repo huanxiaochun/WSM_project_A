@@ -111,7 +111,7 @@ def save_tfdict(doc_tfdict_path):
             if j == 0 or j == 1:  # DocID   ID
                 continue
             elif j == 2 or j == 4 or j == 5 or j == 6 or j == 7 or j == 8:
-                text = str(data[i][j]).strip()
+                text = str(data[i][j]).strip().replace(' ', '').replace('\xa0', '')
             else:
                 lines = str(data[i][j]).strip().split("\r")
                 text = process_lines(lines)
