@@ -176,11 +176,22 @@ aui-select button.aui-button, form.aui:not(.aui-legacy-forms) aui-select button.
 	height: 100%;
 }
 
+#result_wait{
+	position: absolute;
+	top: 12%;
+	width: 100%;
+	height: 100%;
+	background-color: #ddd;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	float: left;
+	opacity: 0.4;
+}
+
 #result_list{
 	position: absolute;
 	width: 100%;
 }
-
 
 table#result-table{
 	border-collapse:collapse;
@@ -222,17 +233,11 @@ table#result-table{
 	background-color: rgba(245, 245, 245, 0.5	);
 }
 
-.multi{
-	display:-webkit-box;
-	word-break: break-all;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:2; 
-	overflow:hidden;
-	
-	/* vertical-align: middle;
+td {
+	vertical-align: middle;
     text-align: center;
     word-break:keep-all;
 	white-space:nowrap;
 	overflow:hidden;  
-	text-overflow:ellipsis; */
+	text-overflow:ellipsis;
 }

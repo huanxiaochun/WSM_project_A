@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="css/jquery-labelauty.css">
 
     <!-- js library -->
-    <script src="jslib/jquery.min.js"></script>
+	<script src="jslib/jquery.min.js"></script>
     <script src="jslib/bootstrap-slider.min.js"></script>
     <script src="jslib/d3.js"></script>
     <script src="jslib/underscore-min.js"></script>
@@ -29,7 +29,7 @@
     <script src="jslib/icheck.js"></script>
     <script src="jslib/d3tip.js"></script>
 	<script src="jslib/bootstrap-switch.js"></script>
-	<script src="jslib/spin.min.js"></script>
+	<script src="jslib/spin.js"></script>
 	<script src="jslib/svg-pan-zoom.js"></script>
 	<script src="jslib/aui-prototyping.js"></script>
 	<script src="jslib/d3-contour.js"></script>
@@ -75,25 +75,11 @@
 						<th id="amount" width="15%" onclick="rank_amount()">Amount of fines <svg class='icon sort-icon' aria-hidden='true'><use xlink:href='#iconpaixu'></use></svg></th>
 						<th id="registration" width="15%" onclick="rank_registration()">Registration dates <svg class='icon sort-icon' aria-hidden='true'><use xlink:href='#iconpaixu'></use></svg></th>
 						<th width="70%">Content</th>
-					</tr>
-					<tr>
-						<td>1000</td>
-						<td>2020-03-24</td>
-						<td>A</td>
-					</tr>
-					<tr>
-						<td>900</td>
-						<td>2020-01-24</td>
-						<td>B</td>
-					</tr>
-					<tr>
-						<td>1200</td>
-						<td>2020-05-24</td>
-						<td>C</td>
-					</tr> -->
+					</tr>-->
 				</table>
 			</div>
 		</div>
+		<div id="result_wait"></div>
 	</div>
 </div>
 
@@ -115,17 +101,6 @@
 			search_value(mode, value);
 		}
 	});
-
-
-	$(function () {
-		$("td").on("click",function() {
-			if (this.offsetWidth < this.scrollWidth) {
-				var that = this;
-				var text = $(this).text();
-				alert(text);
-			}
-		});
-	})
 </script>
 <script src="js/Init.js"></script>
 <script src="js/Boolean_search.js"></script>
