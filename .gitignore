@@ -2,4 +2,6 @@ data/
 index/
 .idea/
 venv/
-
+server/__pycache__/
+server/.idea/
+server/venv/
