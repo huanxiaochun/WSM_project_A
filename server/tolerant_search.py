@@ -9,7 +9,7 @@ import os
 BYTE_SIZE = 4
 DICTIONARY_FILE = os.path.join('../index', 'dictionary')
 POSTINGS_FILE = os.path.join('../index', 'postings')
-TOLERANT_THRESHOLD = 70
+TOLERANT_THRESHOLD = 0.6
 INDEXED_DOCIDS = 1636926
 
 def load_posting_list(post_file, length, offset):
@@ -31,10 +31,10 @@ def load_dictionary(dict_file):
     for entry in dict_file.read().split('\n'):
         # if entry is not empty (last line in dictionary file is empty)
         if (entry):
-            print(entry)
-            print(len(entry))
+            # print(entry)
+            # print(len(entry))
             token = entry.split(" ")
-            print(token)
+            # print(token)
             term = token[0]
             df = int(token[1])
             offset = int(token[2])
@@ -57,8 +57,8 @@ def tolerant_search(query):
         return code, result
     else:
         def takeSecond(elem):
-            return elem[0]
-        result.sort(key=takeSecond)
+            return elem[1]
+        result.sort(key=takeSecond, reverse=True)
         return code, [x[0] for x in result]
 
 
@@ -71,6 +71,7 @@ def get_similar_docscorc_list(token, dictionary, postfile):
     docscorc_dict = dict()
     for term in dictionary.keys():
         score = get_similar_score(token, term)
+        # print(score)
         if score > TOLERANT_THRESHOLD:
             result.append(term)
             doc_list = load_posting_list(postfile, dictionary[term][0], dictionary[term][1])
@@ -156,8 +157,8 @@ def process_query(query, dictionary, post_file):
         if (token != 'AND' and token != 'OR' and token != 'NOT'):
             # token = stemmer.stem(token)  # stem the token
             # default empty list if not in dictionary
-            if (token in dictionary):
-                result = get_similar_docscorc_list(token, dictionary, post_file)
+            # if (token in dictionary):
+            result = get_similar_docscorc_list(token, dictionary, post_file)
                 # result = load_posting_list(post_file, dictionary[token][0], dictionary[token][1])
 
         # else if AND operator
@@ -210,10 +211,11 @@ def boolean_AND(left_list, right_list):
         # case 1: if match
         if (l_item == r_item):
             # result.append(l_item)  # add to results
-            l_index += 1  # advance left index
-            r_index += 1  # advance right index
             score = min(left_list[l_index][1], right_list[r_index][1])
             docscore_list.append((l_item, score))
+            l_index += 1  # advance left index
+            r_index += 1  # advance right index
+
 
         # case 2: if left item is more than right item
         elif (l_item > r_item):
@@ -254,38 +256,41 @@ def boolean_OR(left_list, right_list):
             # case 1: if items are equal, add either one to result and advance both pointers
             if (l_item == r_item):
                 # result.append(l_item)
-                l_index += 1
-                r_index += 1
                 score = max(left_list[l_index][1], right_list[r_index][1])
                 docscore_list.append((l_item, score))
+                l_index += 1
+                r_index += 1
+
 
             # case 2: l_item greater than r_item, add r_item and advance r_index
             elif (l_item > r_item):
                 # result.append(r_item)
-                r_index += 1
                 docscore_list.append(right_list[r_index])
+                r_index += 1
+
 
 
             # case 3: l_item lower than r_item, add l_item and advance l_index
             else:
                 # result.append(l_item)
-                l_index += 1
                 docscore_list.append(left_list[l_index])
+                l_index += 1
+
 
         # if left_operand list is exhausted, append r_item and advance r_index
         elif (l_index >= len(left_operand)):
-            r_item = right_operand[r_index]
+            docscore_list.append(right_list[r_index])
             # result.append(r_item)
             r_index += 1
-            docscore_list.append(right_list[r_index])
+
 
 
         # else if right_operand list is exhausted, append l_item and advance l_index
         else:
-            l_item = left_operand[l_index]
+            docscore_list.append(left_list[l_index])
             # result.append(l_item)
             l_index += 1
-            docscore_list.append(left_list[l_index])
+
     return docscore_list
 
 

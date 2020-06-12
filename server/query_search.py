@@ -161,7 +161,7 @@ def query_search(query):
     def takeSecond(elem):
         return elem[1]
 
-    docscorc_list.sort(key=takeSecond)
+    docscorc_list.sort(key=takeSecond, reverse=True)
     Doclist = [x[0] for x in docscorc_list]
     if len(Doclist) >= THRESH:
         Doclist = Doclist[: THRESH]
