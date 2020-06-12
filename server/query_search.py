@@ -1,6 +1,7 @@
 import sqlite3
 import os
 from tqdm import trange
+import string
 import struct
 from indexer import BYTE_SIZE, IGNORE_NUMBERS, IGNORE_STOPWORDS, is_number
 from zhon.hanzi import punctuation
@@ -74,7 +75,7 @@ def load_dictionary():
 
 
 def remove_punct(text):
-    return re.sub(r"[%s]+" % (punctuation + ',()'), "", text)
+    return re.sub(r"[%s]+" % (punctuation + string.punctuation), "", text)
 
 
 def segment(text):

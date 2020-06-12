@@ -1,4 +1,4 @@
-from indexer import BYTE_SIZE
+# from indexer import BYTE_SIZE
 import struct
 import codecs
 import io
@@ -6,6 +6,7 @@ import Levenshtein
 import collections
 import math
 import os
+BYTE_SIZE = 4
 DICTIONARY_FILE = os.path.join('../index', 'dictionary')
 POSTINGS_FILE = os.path.join('../index', 'postings')
 TOLERANT_THRESHOLD = 70
