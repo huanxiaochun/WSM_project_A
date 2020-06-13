@@ -6,6 +6,9 @@ import Levenshtein
 import collections
 import math
 import os
+
+from utils import *
+
 BYTE_SIZE = 4
 DICTIONARY_FILE = os.path.join('../index', 'dictionary')
 POSTINGS_FILE = os.path.join('../index', 'postings')
@@ -13,41 +16,11 @@ TOLERANT_THRESHOLD = 0.7
 INDEXED_DOCIDS = 1636926
 
 
-def load_posting_list(post_file, length, offset):
-    post_file.seek(offset)
-    posting_list = []
-    for i in range(length):
-        posting = post_file.read(BYTE_SIZE)
-        docID = struct.unpack('I', posting)[0]
-        posting_list.append(docID)
-    return posting_list
-
-
-def load_dictionary(dict_file):
-    dictionary = {}                   # dictionary map loaded
-    # indexed_docIDs = []             # list of all docIDs indexed
-    # docIDs_processed = False        # if indexed_docIDs is processed
-
-    # load each term along with its df and postings file pointer to dictionary
-    for entry in dict_file.read().split('\n'):
-        # if entry is not empty (last line in dictionary file is empty)
-        if (entry):
-            # print(entry)
-            # print(len(entry))
-            token = entry.split(" ")
-            # print(token)
-            term = token[0]
-            df = int(token[1])
-            offset = int(token[2])
-            dictionary[term] = (df, offset)
-
-    return dictionary
-
-
 def tolerant_search(query, dictionary, post_file):
-    code, result = process_query(query, dictionary, post_file)
+    code, result = process_tolerant_query(query, dictionary, post_file)
     # close files
-    post_file.close()
+    # post_file.close()
+
     if code == 0:
         return code, result
     else:
@@ -130,13 +103,13 @@ def shunting_yard(infix_tokens):
     return output
 
 
-def process_query(query, dictionary, post_file):
+def process_tolerant_query(query, dictionary, post_file):
     # stemmer = nltk.stem.porter.PorterStemmer()  # instantiate stemmer
     # prepare query list
     query = query.replace(' ', '')
     query = query.replace('AND', ' AND ')
     query = query.replace('OR', ' OR ')
-    query = query.replace('NOT', ' NOT ')
+    query = query.replace('NOT', 'NOT ')
     query = query.replace('(', '( ')
     query = query.replace(')', ' )')
     query_old = query.split(' ')
@@ -312,7 +285,7 @@ if __name__ == '__main__':
     dict_file = codecs.open(DICTIONARY_FILE, encoding='utf-8')
     post_file = io.open(POSTINGS_FILE, 'rb')
     # load dictionary to memory
-    dictionary = load_dictionary(dict_file)
+    (dictionary, _) = load_dictionary(dict_file)
     dict_file.close()
 
     result = tolerant_search("上海徐汇人民法院 AND（2017）沪0112执5983号", dictionary, post_file)

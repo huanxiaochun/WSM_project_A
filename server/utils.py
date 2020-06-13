@@ -29,7 +29,6 @@ def load_dictionary(dict_file):
     '''
     dictionary = {}                 # dictionary map loaded
     indexed_docIDs = []             # list of all docIDs indexed
-    docIDs_processed = False        # if indexed_docIDs is processed
 
     # load each term along with its df and postings file pointer to dictionary
     for entry in dict_file.read().split('\n'):
@@ -42,27 +41,6 @@ def load_dictionary(dict_file):
             dictionary[term] = (df, offset)
 
     return (dictionary, indexed_docIDs)
-
-
-def load_files(index):
-    '''
-    load dictionary and posting lists from index path
-    :param index: file path
-    :return: (dictionary, indexed_docIDs, id2file)
-    '''
-    # open files
-    dict_file = codecs.open(os.path.join(index, 'dictionary'), encoding='utf-8')
-
-
-    # load dictionary to memory
-    loaded_dict = load_dictionary(dict_file)
-    dictionary = loaded_dict[0]     # dictionary map
-    indexed_docIDs = loaded_dict[1] # list of all docIDs indexed in sorted order
-    # close files
-    dict_file.close()
-
-
-    return dictionary, indexed_docIDs
 
 
 def load_posting_list(post_file, length, offset):
@@ -82,7 +60,7 @@ def load_posting_list(post_file, length, offset):
     return posting_list
 
 
-def search_Doc(Dlist, table_name):
+def search_Doc(Dlist, table_name_list):
     conn = sqlite3.connect(os.path.join(root_path, 'data.db'))
     conn.text_factory = str
     print("Opened database successfully...")
@@ -92,11 +70,24 @@ def search_Doc(Dlist, table_name):
     if len(Dlist) == 1:
         str_list = str_list.replace(",", "")
 
-    sql = "select * from " + table_name + " where DocID in " + str_list
-    c.execute(sql)
-    data = c.fetchall()
-    conn.close()
-    return data
+
+    # query
+    if len(table_name_list) == 1:
+        sql = "select * from " + table_name_list[0] + " where DocID in " + str_list
+        c.execute(sql)
+        data = c.fetchall()
+        conn.close()
+        return data
+    else:   # others
+        result = {}
+        for table_name in table_name_list:
+            sql = "select * from " + table_name + " where DocID in " + str_list
+            c.execute(sql)
+            data = c.fetchall()
+            result[table_name] = data
+
+        conn.close()
+        return result
 
 
 def process_query(query, dictionary, post_file, indexed_docIDs):
@@ -156,8 +147,9 @@ def process_query(query, dictionary, post_file, indexed_docIDs):
     # NOTE: at this point results_stack should only have one item and it is the final result
     if len(results_stack) != 1:
         print ("ERROR: results_stack. Please check valid query") # check for errors
-    
-    return results_stack.pop()
+
+    result = search_Doc(results_stack.pop(), ["data1", "data2"])
+    return result
 
 
 def shunting_yard(infix_tokens):

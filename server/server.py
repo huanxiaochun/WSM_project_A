@@ -12,7 +12,7 @@ import os
 
 from query_search import *
 from tolerant_search import *
-# from utils import *
+from utils import *
 
 define("port", default=8661, help="run on the given port", type=int)
 
@@ -31,8 +31,9 @@ POSTINGS_FILE = os.path.join(index_path, 'postings')
 # open files
 dict_file = codecs.open(DICTIONARY_FILE, encoding='utf-8')
 post_file = io.open(POSTINGS_FILE, 'rb')
+
 # load dictionary to memory
-dictionary = load_dictionary(dict_file)
+(dictionary, indexed_docIDs) = load_dictionary(dict_file)
 dict_file.close()
 
 
@@ -41,8 +42,7 @@ class Boolean_search(tornado.web.RequestHandler):
         value = (json.loads(self.get_argument('value')))
         print(value)
 
-        # result = process_query(value, dictionary, post_file, indexed_docIDs)
-        result = "Boolean"
+        result = process_query(value, dictionary, post_file, indexed_docIDs)
 
         evt_unpacked = {'result': result}
         evt = json.dumps(evt_unpacked)

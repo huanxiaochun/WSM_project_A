@@ -32,16 +32,7 @@ function Init(Observer){
     $("#search_input").val(value);
     $('#mode-select').val(mode);
 
-    show_spinner();
-    if(mode == "Boolean"){
-        Observer.fireEvent("Boolean", value, Init);
-    }
-    else if(mode == "Tolerant"){
-        Observer.fireEvent("Tolerant", value, Init);
-    }
-    else{
-        Observer.fireEvent("Query", value, Init);
-    }
+    search_value(mode, value);
 
     init.onMessage = function(message, data, from){
         if(message == "haha"){
@@ -65,6 +56,13 @@ function getParams(key) {
 }
 
 function show_spinner(){
+    // var width = $('#bottom-div').width();
+    // var height = $('#bottom-div').height();
+
+    // $("#result_wait").css('left',0);
+    // $("#result_wait").css('height', height);
+    // $("#result_wait").css('width', width);
+
     $("#result_wait").show(function(){
         var target= document.getElementById('result_wait');
         spinner.spin(target);  
@@ -84,25 +82,27 @@ function search_value(mode, value){
     }
 }
 
+var reg =/[\u4e00-\u9fa5]/g;
 // 排序的比较函数 1: 降序  -1: 升序
 function compare(property, order){
-    if(property == "amount"){
+    if(property == "amount" || property == "imoney"){
         if(order == 1){
             return function(obj1, obj2){
-                var val1 = Number(obj1[property]);
-                var val2 = Number(obj2[property]);
+                // 去除字符串中的中文
+                var val1 = Number(obj1[property].replace(reg, ""));
+                var val2 = Number(obj2[property].replace(reg, ""));
                 return val2 - val1;
             }
         }
         else if(order == -1){
             return function(obj1, obj2){
-                var val1 = Number(obj1[property]);
-                var val2 = Number(obj2[property]);
+                var val1 = Number(obj1[property].replace(reg, ""));
+                var val2 = Number(obj2[property].replace(reg, ""));
                 return val1 - val2;
             }
         }
     }
-    else if(property == "date"){
+    else if(property == "date" || property == "regDate" || property == "publishDate"){
         if(order == 1){
             return function(obj1, obj2){
                 var val1 = new Date(Date.parse(obj1[property].replace('年','-').replace('月','-').replace('日','')));
@@ -119,28 +119,3 @@ function compare(property, order){
         }
     }
 }
-
-// function rank_amount(){
-//     var table_data = getTableData();
-//     // 设置默认降序
-//     if(amount_sort == 0){
-//         amount_sort = 1;
-//         $("th#amount svg use").attr("xlink:href", "#iconpaixu-xia");
-//         table_data.sort(compare("amount", 1));
-//     }
-//     else if(amount_sort == 1){
-//         amount_sort = -1;
-//         $("th#amount svg use").attr("xlink:href", "#iconpaixu-shang");
-//         table_data.sort(compare("amount", -1));
-//     }
-//     else{
-//         amount_sort = 1;
-//         $("th#amount svg use").attr("xlink:href", "#iconpaixu-xia");
-//         table_data.sort(compare("amount", 1));
-//     }
-
-//     // 网页更新排序的数据
-//     updateTable(table_data);
-// }
-
-

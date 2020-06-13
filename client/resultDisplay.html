@@ -69,14 +69,14 @@
 	</div>
 	<div id="bottom-div" class="outer-div">
 		<div id="result-border">
-			<div id="result-list">
-				<table id="result-table" width="100%">
-					<!-- <tr>
-						<th id="amount" width="15%" onclick="rank_amount()">Amount of fines <svg class='icon sort-icon' aria-hidden='true'><use xlink:href='#iconpaixu'></use></svg></th>
-						<th id="registration" width="15%" onclick="rank_registration()">Registration dates <svg class='icon sort-icon' aria-hidden='true'><use xlink:href='#iconpaixu'></use></svg></th>
-						<th width="70%">Content</th>
-					</tr>-->
-				</table>
+			<div id="query-list">
+				<table id="query-table" width="100%"></table>
+			</div>
+			<div id="data1-list">
+				<table id="data1-table" width="100%"></table>
+			</div>
+			<div id="data2-list">
+				<table id="data2-table" width="100%"></table>
 			</div>
 		</div>
 		<div id="result_wait"></div>
@@ -87,7 +87,15 @@
 <script>
 	(function($){
 		$(window).on("load",function(){
-			$("#result-border").mCustomScrollbar({
+			$("#query-list").mCustomScrollbar({
+				axis: "y",
+				theme:"dark"
+			});
+			$("#data1-list").mCustomScrollbar({
+				axis: "y",
+				theme:"dark"
+			});
+			$("#data2-list").mCustomScrollbar({
 				axis: "y",
 				theme:"dark"
 			});

@@ -4,6 +4,8 @@ function Tolerant_search(Observer){
     tolerant_search.onMessage = function(message, data, from){
         if(message == "Tolerant"){
             if(from == Init){
+                $("#query-list").hide();
+                
                 let obj = {};
                 obj.value = JSON.stringify(data);
                 $.ajax({

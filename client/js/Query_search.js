@@ -8,6 +8,10 @@ function Query_search(Observer){
     query_search.onMessage = function(message, data, from){
         if(message == "Query"){
             if(from == Init){
+                $("#data1-list").hide();
+                $("#data2-list").hide();
+                $("#query-list").show();
+
                 let obj = {};
                 obj.value = JSON.stringify(data);
                 $.ajax({
@@ -38,8 +42,8 @@ function Query_search(Observer){
 
 
 function create_query_table(){
-    $("#result-table tr").remove();    // 清除表格内容
-    var table = $("#result-table");
+    $("#query-table tr").remove();    // 清除表格内容
+    var table = $("#query-table");
     table.html("<tr>\
                     <th width='10%'>ID</th>\
                     <th width='15%'>案号</th>\
@@ -54,11 +58,11 @@ function create_query_table(){
 }
 
 function insert_data(table_data, start, end){
-    $("#result-table  tr:not(:first)").remove();      // 删去除表头之外的数据
+    $("#query-table  tr:not(:first)").remove();      // 删去除表头之外的数据
     // 新建单元格
     for(var i = 1; i <= (end - start + 1); i++){
-        var insertTr = document.getElementById("result-table").insertRow(i);
-        insertTr.className = "multi";  
+        var insertTr = document.getElementById("query-table").insertRow(i);
+
         for(var j = 0; j < 9; j++){
             var insertTd = insertTr.insertCell(j);
             insertTd.onclick = function() { alert($(this).text()) };
@@ -67,14 +71,14 @@ function insert_data(table_data, start, end){
     // 写入新数据
     for(var i = 0; i <= (end - start); i++){
         for(var j = 0; j < 9; j++){
-            $("#result-table tr:eq(" + (i + 1) + ") td:nth-child(" + (j + 1) + ")").html(table_data[start + i][j + 1]);
+            $("#query-table tr:eq(" + (i + 1) + ") td:nth-child(" + (j + 1) + ")").html(table_data[start + i][j + 1]);
         }
     }
 }
 
 function getTableData(){
     var result = new Array();
-    $("#result-table").find("tr").each(function(){
+    $("#query-table").find("tr").each(function(){
         var tmp = new Array();
         $(this).find("td").each(function(){
             tmp.push($(this).text());
@@ -98,10 +102,10 @@ function getTableData(){
 }
 
 function updateTable(table){
-    $("#result-table  tr:not(:first)").remove();      // 删去除表头之外的数据
+    $("#query-table  tr:not(:first)").remove();      // 删去除表头之外的数据
     // 新建单元格
     for(var i = 1; i <= table.length; i++){
-        var insertTr = document.getElementById("result-table").insertRow(i);
+        var insertTr = document.getElementById("query-table").insertRow(i);
         for(var j = 0; j < 9; j++){
             var insertTd = insertTr.insertCell(j);
             insertTd.onclick = function() { alert($(this).text()) };
@@ -110,7 +114,7 @@ function updateTable(table){
     // 写入新数据
     for(var i = 0; i < table.length; i++){
         for(var j = 0; j < 9; j++){
-            $("#result-table tr:eq(" + (i + 1) + ") td:nth-child(" + (j + 1) + ")").html(table[i][query_keys[j]]);
+            $("#query-table tr:eq(" + (i + 1) + ") td:nth-child(" + (j + 1) + ")").html(table[i][query_keys[j]]);
         }
     }
 

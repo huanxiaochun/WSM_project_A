@@ -16,7 +16,6 @@ import nltk
 from utils import *
 TOTAL_DOCS = 3089
 THRESH = 200
-TABLE_NAME = "instruments"
 
 DICTIONARY_FILE = os.path.join('../index', 'ins_dictionary')
 POSTINGS_FILE = os.path.join('../index', 'ins_postings')
@@ -39,16 +38,6 @@ def process_tokens(tokens):
         else:
             results.append(term)
     return results
-
-
-def load_posting_list(post_file, length, offset):
-    post_file.seek(offset)
-    posting_list = []
-    for i in range(length):
-        posting = post_file.read(BYTE_SIZE)
-        docID = struct.unpack('I', posting)[0]
-        posting_list.append(docID)
-    return posting_list
 
 
 def load_dictionary():
@@ -166,7 +155,7 @@ def query_search(query):
     if len(Doclist) >= THRESH:
         Doclist = Doclist[: THRESH]
 
-    result = search_Doc(Doclist, TABLE_NAME)
+    result = search_Doc(Doclist, ["instruments"])
     return result
 
 

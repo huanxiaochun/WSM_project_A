@@ -175,6 +175,21 @@ aui-select button.aui-button, form.aui:not(.aui-legacy-forms) aui-select button.
 	width: 100%;
 	height: 100%;
 }
+#query-list{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+#data1-list{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+#data2-list{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
 
 #result_wait{
 	position: absolute;
@@ -193,14 +208,21 @@ aui-select button.aui-button, form.aui:not(.aui-legacy-forms) aui-select button.
 	width: 100%;
 }
 
-table#result-table{
+table#query-table{
 	border-collapse:collapse;
 	font-size: 12px;
 	color: rgba(51, 45, 45, 1);
 	table-layout:fixed;    /*table的内部布局固定大小，才可以通过td的width控制宽度*/
 	word-wrap:break-word;  /*允许长单词换到下一行*/
 }
-#result-table th{
+table#data1-table, #data2-table{
+	border-collapse:collapse;
+	font-size: 11px;
+	color: rgba(51, 45, 45, 1);
+	table-layout:fixed;    /*table的内部布局固定大小，才可以通过td的width控制宽度*/
+	word-wrap:break-word;  /*允许长单词换到下一行*/
+}
+th{
 	border: solid #dfe1e6; 
 	border-width:0px 0px 2px 0px;
 	padding: 6px 10px;
@@ -209,15 +231,15 @@ table#result-table{
 	text-align:center;/** 设置水平方向居中 */
 	vertical-align:middle/** 设置垂直方向居中 */
 }
-#registration:hover, #amount:hover{
+#registration:hover, #Filing_date:hover, #release_date:hover, #amount:hover, #imoney:hover{
 	background-color: #F5F5F5;
 	cursor: pointer;
 }
-#result-table tr{
+tr{
 	border: solid #dfe1e6; 
 	border-width:0px 0px 1px 0px;
 }
-#result-table td{
+td{
 	padding: 6px 10px;
 	font-family: Verdana;
 	color: rgba(23, 43, 77, 0.7);
@@ -229,7 +251,7 @@ table#result-table{
 	overflow: hidden;
 }
 
-#result-table tr:nth-child(even){
+tr:nth-child(even){
 	background-color: rgba(245, 245, 245, 0.5	);
 }
 
