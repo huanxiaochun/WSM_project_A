@@ -35,17 +35,11 @@ def load_dictionary(dict_file):
     for entry in dict_file.read().split('\n'):
         # if entry is not empty (last line in dictionary file is empty)
         if (entry):
-            # if first line of dictionary, process list of docIDs indexed
-            if (not docIDs_processed):
-                indexed_docIDs = [int(docID) for docID in entry[20:-1].split(',')]
-                docIDs_processed = True
-            # else if dictionary terms and their attributes
-            else:
-                token = entry.split(" ")
-                term = token[0]
-                df = int(token[1])
-                offset = int(token[2])
-                dictionary[term] = (df, offset)
+            token = entry.split(" ")
+            term = token[0]
+            df = int(token[1])
+            offset = int(token[2])
+            dictionary[term] = (df, offset)
 
     return (dictionary, indexed_docIDs)
 
@@ -58,19 +52,17 @@ def load_files(index):
     '''
     # open files
     dict_file = codecs.open(os.path.join(index, 'dictionary'), encoding='utf-8')
-    id2file_file = open(os.path.join(index, 'id2file.json'), 'r')
+
 
     # load dictionary to memory
     loaded_dict = load_dictionary(dict_file)
     dictionary = loaded_dict[0]     # dictionary map
     indexed_docIDs = loaded_dict[1] # list of all docIDs indexed in sorted order
-    # load id2file
-    id2file = json.load(id2file_file)
     # close files
     dict_file.close()
-    id2file_file.close()
 
-    return dictionary, indexed_docIDs, id2file
+
+    return dictionary, indexed_docIDs
 
 
 def load_posting_list(post_file, length, offset):
@@ -121,7 +113,7 @@ def process_query(query, dictionary, post_file, indexed_docIDs):
     query = query.replace(' ', '')
     query = query.replace('AND', ' AND ')
     query = query.replace('OR', ' OR ')
-    query = query.replace('NOT', ' NOT ')
+    query = query.replace('NOT', 'NOT ')
     query = query.replace('(', '( ')
     query = query.replace(')', ' )')
     query = query.split(' ')
