@@ -9,8 +9,9 @@ import os
 BYTE_SIZE = 4
 DICTIONARY_FILE = os.path.join('../index', 'dictionary')
 POSTINGS_FILE = os.path.join('../index', 'postings')
-TOLERANT_THRESHOLD = 0.6
+TOLERANT_THRESHOLD = 0.7
 INDEXED_DOCIDS = 1636926
+
 
 def load_posting_list(post_file, length, offset):
     post_file.seek(offset)
@@ -23,7 +24,7 @@ def load_posting_list(post_file, length, offset):
 
 
 def load_dictionary(dict_file):
-    dictionary = {}                 # dictionary map loaded
+    dictionary = {}                   # dictionary map loaded
     # indexed_docIDs = []             # list of all docIDs indexed
     # docIDs_processed = False        # if indexed_docIDs is processed
 
@@ -43,13 +44,7 @@ def load_dictionary(dict_file):
     return dictionary
 
 
-def tolerant_search(query):
-    # open files
-    dict_file = codecs.open(DICTIONARY_FILE, encoding='utf-8')
-    post_file = io.open(POSTINGS_FILE, 'rb')
-    # load dictionary to memory
-    dictionary = load_dictionary(dict_file)
-    dict_file.close()
+def tolerant_search(query, dictionary, post_file):
     code, result = process_query(query, dictionary, post_file)
     # close files
     post_file.close()
@@ -314,5 +309,11 @@ def boolean_NOT(right_list, indexed_docIDs):
 
 
 if __name__ == '__main__':
-    result = tolerant_search("上海徐汇人民法院 AND（2017）沪0112执5983号")
+    dict_file = codecs.open(DICTIONARY_FILE, encoding='utf-8')
+    post_file = io.open(POSTINGS_FILE, 'rb')
+    # load dictionary to memory
+    dictionary = load_dictionary(dict_file)
+    dict_file.close()
+
+    result = tolerant_search("上海徐汇人民法院 AND（2017）沪0112执5983号", dictionary, post_file)
     print(result)

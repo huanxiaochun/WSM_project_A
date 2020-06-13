@@ -12,6 +12,7 @@ import os
 
 from query_search import *
 from tolerant_search import *
+# from utils import *
 
 define("port", default=8661, help="run on the given port", type=int)
 
@@ -20,14 +21,28 @@ client_file_root_path = os.path.join(os.path.split(__file__)[0], '../client')
 client_file_root_path = os.path.abspath(client_file_root_path)
 
 
+# load index
+index_path = os.path.join(os.path.split(__file__)[0], '../index')
+index_path = os.path.abspath(index_path)
+
+DICTIONARY_FILE = os.path.join(index_path, 'dictionary')
+POSTINGS_FILE = os.path.join(index_path, 'postings')
+
+# open files
+dict_file = codecs.open(DICTIONARY_FILE, encoding='utf-8')
+post_file = io.open(POSTINGS_FILE, 'rb')
+# load dictionary to memory
+dictionary = load_dictionary(dict_file)
+dict_file.close()
+
+
 class Boolean_search(tornado.web.RequestHandler):
     def get(self):
         value = (json.loads(self.get_argument('value')))
         print(value)
 
-        # TODO
-
-        result = "Boolean_search"
+        # result = process_query(value, dictionary, post_file, indexed_docIDs)
+        result = "Boolean"
 
         evt_unpacked = {'result': result}
         evt = json.dumps(evt_unpacked)
@@ -39,11 +54,9 @@ class Tolerant_search(tornado.web.RequestHandler):
         value = (json.loads(self.get_argument('value')))
         print(value)
 
-        # TODO
+        code, result = tolerant_search(value, dictionary, post_file)
 
-        result = "Tolerant_search"
-
-        evt_unpacked = {'result': result}
+        evt_unpacked = {"code": code, 'result': result}
         evt = json.dumps(evt_unpacked)
         self.write(evt)
 
