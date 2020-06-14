@@ -56,12 +56,12 @@ function getParams(key) {
 }
 
 function show_spinner(){
-    // var width = $('#bottom-div').width();
-    // var height = $('#bottom-div').height();
+    var width = $('#bottom-div').width();
+    var height = $('#bottom-div').height();
 
-    // $("#result_wait").css('left',0);
-    // $("#result_wait").css('height', height);
-    // $("#result_wait").css('width', width);
+    $("#result_wait").css('left',0);
+    $("#result_wait").css('height', height);
+    $("#result_wait").css('width', width);
 
     $("#result_wait").show(function(){
         var target= document.getElementById('result_wait');
@@ -119,3 +119,49 @@ function compare(property, order){
         }
     }
 }
+
+// window.alert = alert;
+// function alert(data) {
+//     var a = document.createElement("div"),
+//         p = document.createElement("p"),
+//         btn = document.createElement("div"),
+//         textNode = document.createTextNode(data ? data : ""),
+//         btnText = document.createTextNode("确定");
+//     // 控制样式
+//     css(a, {
+//         "position" : "absolute",
+//         "left" : "0",
+//         "right" : "0",
+//         "top" : "20%",
+//         "width" : "300px",
+//         "margin" : "0 auto",
+//         "background-color" : "#fff",
+//         "font-size" : "12px",
+//         "font-family": "Lucida Console",
+//         "text-align" : "center"
+//     });
+//     css(btn, {
+//         "background" : "#CEEFE0",
+//         "font-size" : "12px",
+//         "font-family": "Lucida Console",
+//     })
+//     // 内部结构套入
+//     p.appendChild(textNode);
+//     btn.appendChild(btnText);
+//     a.appendChild(p);
+//     a.appendChild(btn);
+//     // 整体显示到页面内
+//     document.getElementsByTagName("body")[0].appendChild(a);
+
+//     // 确定绑定点击事件删除标签
+//     btn.onclick = function() {
+//         a.parentNode.removeChild(a);
+//     }
+// }
+// function css(targetObj, cssObj) {
+//     var str = targetObj.getAttribute("style") ? targetObj.getAttribute("style") : "";
+//     for(var i in cssObj) {
+//         str += i + ":" + cssObj[i] + ";";
+//     }
+//     targetObj.style.cssText = str;
+// }

@@ -14,8 +14,6 @@ function Boolean_search(Observer){
     boolean_search.onMessage = function(message, data, from){
         if(message == "Boolean"){
             if(from == Init){
-                $("#query-list").hide();
-                
                 let obj = {};
                 obj.value = JSON.stringify(data);
                 $.ajax({
@@ -24,6 +22,7 @@ function Boolean_search(Observer){
                     data: obj,
                     dataType: 'json',
                     success: function(evt_data) {
+                        $("#query-list").hide();
                         var data = evt_data.result;
 
                         var height = $('#result-border').height();

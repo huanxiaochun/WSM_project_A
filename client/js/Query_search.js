@@ -8,10 +8,6 @@ function Query_search(Observer){
     query_search.onMessage = function(message, data, from){
         if(message == "Query"){
             if(from == Init){
-                $("#data1-list").hide();
-                $("#data2-list").hide();
-                $("#query-list").show();
-
                 let obj = {};
                 obj.value = JSON.stringify(data);
                 $.ajax({
@@ -20,6 +16,10 @@ function Query_search(Observer){
                     data: obj,
                     dataType: 'json',
                     success: function(evt_data) {
+                        $("#data1-list").hide();
+                        $("#data2-list").hide();
+                        $("#query-list").show();
+
                         var data = evt_data.result;
                         // 创建表格
                         create_query_table();
@@ -65,7 +65,10 @@ function insert_data(table_data, start, end){
 
         for(var j = 0; j < 9; j++){
             var insertTd = insertTr.insertCell(j);
-            insertTd.onclick = function() { alert($(this).text()) };
+            insertTd.onclick = function() { 
+                // $("#show_detail").show(); 
+                alert($(this).text()); 
+            };
         }
     }
     // 写入新数据
@@ -108,7 +111,10 @@ function updateTable(table){
         var insertTr = document.getElementById("query-table").insertRow(i);
         for(var j = 0; j < 9; j++){
             var insertTd = insertTr.insertCell(j);
-            insertTd.onclick = function() { alert($(this).text()) };
+            insertTd.onclick = function() { 
+                // $("#show_detail").show(); 
+                alert($(this).text()); 
+            };
         }
     }
     // 写入新数据

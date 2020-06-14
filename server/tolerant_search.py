@@ -14,6 +14,7 @@ DICTIONARY_FILE = os.path.join('../index', 'dictionary')
 POSTINGS_FILE = os.path.join('../index', 'postings')
 TOLERANT_THRESHOLD = 0.7
 INDEXED_DOCIDS = 1636926
+THRESH = 250
 
 
 def tolerant_search(query, dictionary, post_file):
@@ -27,7 +28,12 @@ def tolerant_search(query, dictionary, post_file):
         def takeSecond(elem):
             return elem[1]
         result.sort(key=takeSecond, reverse=True)
-        return code, [x[0] for x in result]
+        Doclist = [x[0] for x in result]
+        if len(Doclist) >= THRESH:
+            Doclist = Doclist[: THRESH]
+
+        result = search_Doc(Doclist, ["data1", "data2"])
+        return code, result
 
 
 def get_similar_score(token, term):

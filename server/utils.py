@@ -70,7 +70,6 @@ def search_Doc(Dlist, table_name_list):
     if len(Dlist) == 1:
         str_list = str_list.replace(",", "")
 
-
     # query
     if len(table_name_list) == 1:
         sql = "select * from " + table_name_list[0] + " where DocID in " + str_list
