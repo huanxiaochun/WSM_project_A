@@ -106,9 +106,11 @@ def save_tfdict(doc_tfdict_path):
                 text = process_lines(lines)
             text_clean = remove_punct(text)
             tokens += segment(text_clean)
+        tokens = process_tokens(tokens)
         for t in tokens:
             tfdict[t] += 1
         doc_tfdict[str(data[i][0])] = tfdict
+
 
     wf = open(doc_tfdict_path, 'w', encoding='utf-8')
     json.dump(doc_tfdict, wf, ensure_ascii=False)
