@@ -5,6 +5,7 @@
 ├─ client
 │  │  index.html
 │  │  resultDisplay.html
+|  |  resultDetail.html
 |  |
 │  ├─css
 │  ├─data
@@ -17,12 +18,18 @@
 │  │      Query_search.js
 |  |      Init.js
 │  │      observer.js
+|  |      show_detail.js
 │  │     
 │  └─jslib
 |
 └─server
     │  data_process.py
     │  server.py
+    |  indexer.py
+    |  utils.py
+    |  boolean_search.py
+    |  tolerant_search.py
+    |  query_search.py
     |
     ├─.idea
     ├─venv
@@ -35,6 +42,7 @@
 
 |  Index    |  Attribute     |  Type         |   Detail   |
 |  :---:    |  :-------:     |  ---:         |   :---     |
+|0          | DocID          |     INT       | id of document |
 |1          | ID             |     CHAR(100) | id of this piece of data |
 |2          | caseCode       |     TEXT      | 案号|
 |3          | Title          |     TEXT      | 标题|
@@ -49,6 +57,7 @@
 
 |  Index    |  Attribute     |  Type         |   Detail   |
 |  :---:    |  :-------:     |  ---:         |   :---     |
+|0          | DocID          |     INT       | id of document |
 |1          | ID *           |     INT       | id of this piece of data |
 |2          | iname *        |     TEXT      | 被执行人姓名/名称|
 |3          | caseCode *     |     TEXT      | 案号|
@@ -74,6 +83,7 @@
 
 |  Index    |  Attribute     |  Type         |   Detail   |
 |  :---:    |  :-------:     |  ---:         |   :---     |
+|0          | DocID          |     INT       | id of document |
 |1          | caseCode *     |     TEXT      | 案号 |
 |2          | iname *        |     CHAR(20)  | 被执行人|
 |3          | iaddress       |     TEXT      | 被执行人地址|
@@ -82,7 +92,7 @@
 |6          | courtName_phone * |     TEXT      | 承办法院|
 
 ## 使用步骤
-1. 安装tornado
+1. 安装一些包
 ```
     pip install -r requirements.txt
 ```
@@ -94,3 +104,5 @@
 ![index](client/image/index.jpg)
 4. 输入查询之后跳转到结果页面, 点击表头进行数据排序
 ![index](client/image/result.jpg)
+5. 点击每一行显示文档具体信息
+![index](client/image/detail.jpg)
