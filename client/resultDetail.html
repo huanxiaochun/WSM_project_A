@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+    <title>CWLsystem</title>
+    <!-- css library -->
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.css">
+
+    <!-- js library -->
+    <script src="jslib/jquery.min.js"></script>
+    <script src="jslib/jquery.mCustomScrollbar.concat.min.js"></script>
+
+	<!-- css -->
+    <link rel="stylesheet" href="css/main_detail.css">
+</head>
+    
+
+<body>
+<div id="content-div">
+    <div id="detail_div">
+        <table id="detail-table" width="100%"></table>
+    </div>
+</div>
+
+<!-- js -->
+<script>
+    (function($){
+		$(window).on("load",function(){
+			$("#detail_div").mCustomScrollbar({
+				axis: "y",
+				theme:"dark"
+			});
+		});
+	})(jQuery);
+</script>
+<script src="js/show_detail.js"></script>
+
+</body>
+</html>

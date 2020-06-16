@@ -2,6 +2,8 @@
 var tolerant_Filing_date_sort = 0;
 var tolerant_release_date_sort = 0;
 var tolerant_imoney_sort = 0;
+var tolerant_casecode_1_sort = 0;
+var tolerant_casecode_2_sort = 0;
 
 var data1_keys = ["ID", "iname", "caseCode", "age", "sexy", "cardNum", "businessEntity", "courtName", "areaName",
                 "gistId", "regDate", "gistUnit", "duty", "performance", "performedPart", "unperformPart", "disruptTypeName",
@@ -84,13 +86,21 @@ function Tolerant_search(Observer){
     return tolerant_search;
 }
 
+function get_tolerant_detail(this_dom, keys){
+    var res = {};
+    this_dom.children('td').each(function(i){  // 遍历 tr 的各个 td
+        res[keys[i]] = $(this).text();
+    });
+    return res;
+}
+
 function create_tolerant_table1(){
     $("#data1-table tr").remove();    // 清除表格内容
     var table = $("#data1-table");
     table.html("<tr>\
                     <th width='7%'>ID</th>\
                     <th width='4%'>姓名</th>\
-                    <th width='5%'>案号</th>\
+                    <th width='5%' id='caseCode_1' onclick='rank_tolerant_caseCode_1()'>案号&nbsp;<svg class='icon sort-icon' aria-hidden='true'><use xlink:href='#iconpaixu'></use></svg></th>\
                     <th width='3%'>年龄</th>\
                     <th width='3%'>性别</th>\
                     <th width='5%'>身份证</th>\
@@ -115,9 +125,13 @@ function insert_tolerant_data1(table_data, start, end){
     // 新建单元格
     for(var i = 1; i <= (end - start + 1); i++){
         var insertTr = document.getElementById("data1-table").insertRow(i);
+        insertTr.onclick = function() { 
+            show_detail_data = get_tolerant_detail($(this), data1_keys);
+            show_detail_data.type = "data1";
+            window.open("resultDetail.html", "_blank");
+        };
         for(var j = 0; j < 19; j++){
-            var insertTd = insertTr.insertCell(j);
-            insertTd.onclick = function() { alert($(this).text()) };
+            insertTr.insertCell(j);
         }
     }
     // 写入新数据
@@ -141,7 +155,7 @@ function create_tolerant_table2(){
     $("#data2-table tr").remove();    // 清除表格内容
     var table = $("#data2-table");
     table.html("<tr>\
-                    <th width='10%'>案号</th>\
+    <th width='10%' id='caseCode_2' onclick='rank_tolerant_caseCode_2()'>案号&nbsp;<svg class='icon sort-icon' aria-hidden='true'><use xlink:href='#iconpaixu'></use></svg></th>\
                     <th width='5%'>被执行人</th>\
                     <th width='20%'>被执行人地址</th>\
                     <th width='10%' id='imoney' onclick='rank_tolerant_imoney()'>被执行标的金额（元）&nbsp;<svg class='icon sort-icon' aria-hidden='true'><use xlink:href='#iconpaixu'></use></svg></th>\
@@ -155,9 +169,13 @@ function insert_tolerant_data2(table_data, start, end){
     // 新建单元格
     for(var i = 1; i <= (end - start + 1); i++){
         var insertTr = document.getElementById("data2-table").insertRow(i);
+        insertTr.onclick = function() { 
+            show_detail_data = get_tolerant_detail($(this), data2_keys);
+            show_detail_data.type = "data2";
+            window.open("resultDetail.html", "_blank");
+        };
         for(var j = 0; j < 6; j++){
-            var insertTd = insertTr.insertCell(j);
-            insertTd.onclick = function() { alert($(this).text()) };
+            insertTr.insertCell(j);
         }
     }
     // 写入新数据
@@ -211,9 +229,13 @@ function updateTableData1(table){
     // 新建单元格
     for(var i = 1; i <= table.length; i++){
         var insertTr = document.getElementById("data1-table").insertRow(i);
+        insertTr.onclick = function() { 
+            show_detail_data = get_tolerant_detail($(this), data1_keys);
+            show_detail_data.type = "data1";
+            window.open("resultDetail.html", "_blank");
+        };
         for(var j = 0; j < 19; j++){
-            var insertTd = insertTr.insertCell(j);
-            insertTd.onclick = function() { alert($(this).text()) };
+            insertTr.insertCell(j);
         }
     }
     // 写入新数据
@@ -228,6 +250,12 @@ function updateTableData1(table){
 
 function true_rank_tolerant_Filing_date(){
     var table_data = getTableData1();
+    // 表中其他的设为无序
+    tolerant_release_date_sort = 0;
+    $("th#release_date svg use").attr("xlink:href", "#iconpaixu");
+    tolerant_casecode_1_sort = 0;
+    $("th#caseCode_1 svg use").attr("xlink:href", "#iconpaixu");
+
 
     // 设置默认降序
     if(tolerant_Filing_date_sort == 0){
@@ -253,13 +281,19 @@ function true_rank_tolerant_Filing_date(){
 function rank_tolerant_Filing_date(){
     var p = new Promise(function(resolve, reject){
         show_spinner();          //做一些异步操作
-        resolve(setTimeout(true_rank_tolerant_Filing_date, 500));
+        resolve(setTimeout(true_rank_tolerant_Filing_date, 1000));
     });    
 }
 
 // rank publishdate
 function true_rank_tolerant_release_date(){
     var table_data = getTableData1();
+
+    // 表中其他的设为无序
+    tolerant_Filing_date_sort = 0;
+    $("th#Filing_date svg use").attr("xlink:href", "#iconpaixu");
+    tolerant_casecode_1_sort = 0;
+    $("th#caseCode_1 svg use").attr("xlink:href", "#iconpaixu");
 
     // 设置默认降序
     if(tolerant_release_date_sort == 0){
@@ -285,7 +319,44 @@ function true_rank_tolerant_release_date(){
 function rank_tolerant_release_date(){
     var p = new Promise(function(resolve, reject){
         show_spinner();          //做一些异步操作
-        resolve(setTimeout(true_rank_tolerant_release_date, 500));
+        resolve(setTimeout(true_rank_tolerant_release_date, 1000));
+    });    
+}
+
+// rank caseCode
+function true_rank_tolerant_caseCode_1(){
+    var table_data = getTableData1();
+    // 表中其他的设为无序
+    tolerant_Filing_date_sort = 0;
+    $("th#Filing_date svg use").attr("xlink:href", "#iconpaixu");
+    tolerant_release_date_sort = 0;
+    $("th#release_date svg use").attr("xlink:href", "#iconpaixu");
+
+    // 设置默认降序
+    if(tolerant_casecode_1_sort == 0){
+        tolerant_casecode_1_sort = 1;
+        $("th#caseCode_1 svg use").attr("xlink:href", "#iconpaixu-xia");
+        table_data.sort(compare("caseCode", 1));
+    }
+    else if(tolerant_casecode_1_sort == 1){
+        tolerant_casecode_1_sort = -1;
+        $("th#caseCode_1 svg use").attr("xlink:href", "#iconpaixu-shang");
+        table_data.sort(compare("caseCode", -1));
+    }
+    else{
+        tolerant_casecode_1_sort = 1;
+        $("th#caseCode_1 svg use").attr("xlink:href", "#iconpaixu-xia");
+        table_data.sort(compare("caseCode", 1));
+    }
+
+    // 网页更新排序的数据
+    updateTableData1(table_data);
+}
+
+function rank_tolerant_caseCode_1(){
+    var p = new Promise(function(resolve, reject){
+        show_spinner();          //做一些异步操作
+        resolve(setTimeout(true_rank_tolerant_caseCode_1, 1000));
     });    
 }
 
@@ -317,9 +388,13 @@ function updateTableData2(table){
     // 新建单元格
     for(var i = 1; i <= table.length; i++){
         var insertTr = document.getElementById("data2-table").insertRow(i);
+        insertTr.onclick = function() { 
+            show_detail_data = get_tolerant_detail($(this), data2_keys);
+            show_detail_data.type = "data2";
+            window.open("resultDetail.html", "_blank");
+        };
         for(var j = 0; j < 6; j++){
-            var insertTd = insertTr.insertCell(j);
-            insertTd.onclick = function() { alert($(this).text()) };
+            insertTr.insertCell(j);
         }
     }
     // 写入新数据
@@ -334,6 +409,9 @@ function updateTableData2(table){
 
 function true_rank_tolerant_imoney(){
     var table_data = getTableData2();
+    // 表中其他的设为无序
+    tolerant_casecode_2_sort = 0;
+    $("th#caseCode_2 svg use").attr("xlink:href", "#iconpaixu");
 
     // 设置默认降序
     if(tolerant_imoney_sort == 0){
@@ -359,6 +437,41 @@ function true_rank_tolerant_imoney(){
 function rank_tolerant_imoney(){
     var p = new Promise(function(resolve, reject){
         show_spinner();          //做一些异步操作
-        resolve(setTimeout(true_rank_tolerant_imoney, 500));
+        resolve(setTimeout(true_rank_tolerant_imoney, 1000));
+    });    
+}
+
+function true_rank_tolerant_caseCode_2(){
+    var table_data = getTableData2();
+
+    // 表中其他的设为无序
+    tolerant_imoney_sort = 0;
+    $("th#imoney svg use").attr("xlink:href", "#iconpaixu");
+
+    // 设置默认降序
+    if(tolerant_casecode_2_sort == 0){
+        tolerant_casecode_2_sort = 1;
+        $("th#caseCode_2 svg use").attr("xlink:href", "#iconpaixu-xia");
+        table_data.sort(compare("caseCode", 1));
+    }
+    else if(tolerant_casecode_2_sort == 1){
+        tolerant_casecode_2_sort = -1;
+        $("th#caseCode_2 svg use").attr("xlink:href", "#iconpaixu-shang");
+        table_data.sort(compare("caseCode", -1));
+    }
+    else{
+        tolerant_casecode_2_sort = 1;
+        $("th#caseCode_2 svg use").attr("xlink:href", "#iconpaixu-xia");
+        table_data.sort(compare("caseCode", 1));
+    }
+
+    // 网页更新排序的数据
+    updateTableData2(table_data);
+}
+
+function rank_tolerant_caseCode_2(){
+    var p = new Promise(function(resolve, reject){
+        show_spinner();          //做一些异步操作
+        resolve(setTimeout(true_rank_tolerant_caseCode_2, 1000));
     });    
 }

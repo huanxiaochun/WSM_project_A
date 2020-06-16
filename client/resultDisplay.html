@@ -81,7 +81,7 @@
 		</div>
 		<div id="result_wait"></div>
 		<div id="show_detail">
-			hahahahahahahahahhahhhhhhhhhhahahahahahahahahhahhhhhhhhh
+
 		</div>
 	</div>
 </div>
@@ -101,6 +101,10 @@
 				axis: "y",
 				theme:"dark"
 			});
+			$("#show_detail").mCustomScrollbar({
+				axis: "y",
+				theme:"dark"
+			});
 		});
 	})(jQuery);
 
@@ -111,6 +115,12 @@
 			search_value(mode, value);
 		}
 	});
+	$(document).mouseup(function(e){
+        var _con = $("#show_detail");   // 设置目标区域
+        if(!_con.is(e.target) && _con.has(e.target).length === 0){ // Mark 1
+            $("#show_detail").hide(); 
+        }
+    });
 </script>
 <script src="js/Init.js"></script>
 <script src="js/Boolean_search.js"></script>

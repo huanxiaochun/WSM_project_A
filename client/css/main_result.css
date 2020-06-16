@@ -63,6 +63,9 @@ p{
     left: 0;
     right: 0;
 	bottom: 0;
+
+	overflow-x: hidden;
+	overflow-y: scroll;
 	
 	text-align: center;
 	vertical-align: middle;
@@ -245,7 +248,7 @@ table#data1-table, #data2-table{
 	table-layout:fixed;    /*table的内部布局固定大小，才可以通过td的width控制宽度*/
 	word-wrap:break-word;  /*允许长单词换到下一行*/
 }
-th{
+th {
 	border: solid #dfe1e6; 
 	border-width:0px 0px 2px 0px;
 	padding: 6px 10px;
@@ -254,15 +257,15 @@ th{
 	text-align:center;/** 设置水平方向居中 */
 	vertical-align:middle/** 设置垂直方向居中 */
 }
-#registration:hover, #Filing_date:hover, #release_date:hover, #amount:hover, #imoney:hover{
+#registration:hover, #Filing_date:hover, #release_date:hover, #amount:hover, #imoney:hover, #caseCode_q:hover, #caseCode_1:hover, #caseCode_2:hover{
 	background-color: #F5F5F5;
 	cursor: pointer;
 }
-tr{
+tr {
 	border: solid #dfe1e6; 
 	border-width:0px 0px 1px 0px;
 }
-td{
+td {
 	padding: 6px 10px;
 	font-family: Verdana;
 	color: rgba(23, 43, 77, 0.7);
@@ -286,3 +289,7 @@ td {
 	overflow:hidden;  
 	text-overflow:ellipsis;
 }
+
+/* .__web-inspector-hide-shortcut__{
+	display: none;
+} */

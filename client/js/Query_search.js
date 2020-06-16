@@ -1,5 +1,6 @@
 // 0: unsorted    1: Descending order   -1: Ascending order
 var query_date_sort = 0;
+var query_caseCode_sort = 0;
 var query_keys = ["ID", "caseCode", "Title", "Type", "Cause", "Department", "Level", "date", "Content"];
 
 function Query_search(Observer){
@@ -40,20 +41,27 @@ function Query_search(Observer){
     return query_search;
 }
 
+function get_query_detail(this_dom, keys){
+    var res = {};
+    this_dom.children('td').each(function(i){  // 遍历 tr 的各个 td
+        res[keys[i]] = $(this).text();
+    });
+    return res;
+}
 
 function create_query_table(){
     $("#query-table tr").remove();    // 清除表格内容
     var table = $("#query-table");
     table.html("<tr>\
-                    <th width='10%'>ID</th>\
-                    <th width='15%'>案号</th>\
-                    <th width='10%'>标题</th>\
-                    <th width='6%'>文书类别</th>\
-                    <th width='10%'>案由</th>\
-                    <th width='10%'>承办部门</th>\
-                    <th width='5%'>级别</th>\
-                    <th width='10%' id='registration' onclick='rank_date()'>结案日期&nbsp;<svg class='icon sort-icon' aria-hidden='true'><use xlink:href='#iconpaixu'></use></svg></th>\
-                    <th width='24%'>Content</th>\
+                        <th width='10%'>ID</th>\
+                        <th width='15%' id='caseCode_q' onclick='rank_caseCode()'>案号&nbsp;<svg class='icon sort-icon' aria-hidden='true'><use xlink:href='#iconpaixu'></use></svg></th>\
+                        <th width='10%'>标题</th>\
+                        <th width='6%'>文书类别</th>\
+                        <th width='10%'>案由</th>\
+                        <th width='10%'>承办部门</th>\
+                        <th width='5%'>级别</th>\
+                        <th width='10%' id='registration' onclick='rank_date()'>结案日期&nbsp;<svg class='icon sort-icon' aria-hidden='true'><use xlink:href='#iconpaixu'></use></svg></th>\
+                        <th width='24%'>Content</th>\
                 </tr>");
 }
 
@@ -62,13 +70,14 @@ function insert_data(table_data, start, end){
     // 新建单元格
     for(var i = 1; i <= (end - start + 1); i++){
         var insertTr = document.getElementById("query-table").insertRow(i);
+        insertTr.onclick = function() { 
+            show_detail_data = get_query_detail($(this), query_keys);
+            show_detail_data.type = "instruments";
+            window.open("resultDetail.html", "_blank");
+        };
 
         for(var j = 0; j < 9; j++){
-            var insertTd = insertTr.insertCell(j);
-            insertTd.onclick = function() { 
-                // $("#show_detail").show(); 
-                alert($(this).text()); 
-            };
+            insertTr.insertCell(j);
         }
     }
     // 写入新数据
@@ -109,12 +118,13 @@ function updateTable(table){
     // 新建单元格
     for(var i = 1; i <= table.length; i++){
         var insertTr = document.getElementById("query-table").insertRow(i);
+        insertTr.onclick = function() { 
+            show_detail_data = get_query_detail($(this), query_keys);
+            show_detail_data.type = "instruments";
+            window.open("resultDetail.html", "_blank");
+        };
         for(var j = 0; j < 9; j++){
-            var insertTd = insertTr.insertCell(j);
-            insertTd.onclick = function() { 
-                // $("#show_detail").show(); 
-                alert($(this).text()); 
-            };
+            insertTr.insertCell(j);
         }
     }
     // 写入新数据
@@ -136,6 +146,10 @@ function rank_date(){
 
 function true_rank(){
     var table_data = getTableData();
+    // 表中其他的设为无序
+    query_caseCode_sort = 0;
+    $("th#caseCode_q svg use").attr("xlink:href", "#iconpaixu");
+
     // 设置默认降序
     if(query_date_sort == 0){
         query_date_sort = 1;
@@ -151,6 +165,40 @@ function true_rank(){
         query_date_sort = 1;
         $("th#registration svg use").attr("xlink:href", "#iconpaixu-xia");
         table_data.sort(compare("date", 1));
+    }
+
+    // 网页更新排序的数据
+    updateTable(table_data);
+}
+
+function rank_caseCode(){
+    var p = new Promise(function(resolve, reject){
+        show_spinner();          //做一些异步操作
+        resolve(setTimeout(true_rank_caseCode, 1000));
+    });    
+}
+
+function true_rank_caseCode(){
+    var table_data = getTableData();
+    // 表中其他的设为无序
+    query_date_sort = 0;
+    $("th#registration svg use").attr("xlink:href", "#iconpaixu");
+
+    // 设置默认降序
+    if(query_caseCode_sort == 0){
+        query_caseCode_sort = 1;
+        $("th#caseCode_q svg use").attr("xlink:href", "#iconpaixu-xia");
+        table_data.sort(compare("caseCode", 1));
+    }
+    else if(query_caseCode_sort == 1){
+        query_caseCode_sort = -1;
+        $("th#caseCode_q svg use").attr("xlink:href", "#iconpaixu-shang");
+        table_data.sort(compare("caseCode", -1));
+    }
+    else{
+        query_caseCode_sort = 1;
+        $("th#caseCode_q svg use").attr("xlink:href", "#iconpaixu-xia");
+        table_data.sort(compare("caseCode", 1));
     }
 
     // 网页更新排序的数据
