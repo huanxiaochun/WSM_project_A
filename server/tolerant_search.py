@@ -36,7 +36,39 @@ def tolerant_search(query, dictionary, post_file):
         return code, result
 
 
+def MyLevenshtein(token, term):
+    s1 = token
+    s2 = term
+    m, n = len(s1), len(s2)
+    colsize, matrix = m + 1, []
+    for i in range((m + 1) * (n + 1)):
+        matrix.append(0)
+    for i in range(colsize):
+        matrix[i] = i
+    for i in range(n + 1):
+        matrix[i * colsize] = i
+    for i in range(n + 1)[1:n + 1]:
+        for j in range(m + 1)[1:m + 1]:
+            cost = 0
+            if s1[j - 1] == s2[i - 1]:
+                cost = 0  #左对角
+            else:
+                cost = 1  #左对角
+            minValue = matrix[(i - 1) * colsize + j] + 1   #上方
+            if minValue > matrix[i * colsize + j - 1] + 1:  #左边
+                minValue = matrix[i * colsize + j - 1] + 1
+            if minValue > matrix[(i - 1) * colsize + j - 1] + cost: #左对角
+                minValue = matrix[(i - 1) * colsize + j - 1] + cost
+            matrix[i * colsize + j] = minValue
+
+    Ldis = matrix[n * colsize + m]
+    ratio = (s1 + s2 - Ldis) * 1.0 / (s1 + s2)
+
+
+
+
 def get_similar_score(token, term):
+    #return MyLevenshtein(token, term)
     return Levenshtein.ratio(token, term)
 
 
