@@ -62,13 +62,13 @@ def MyLevenshtein(token, term):
             matrix[i * colsize + j] = minValue
 
     Ldis = matrix[n * colsize + m]
-    ratio = (s1 + s2 - Ldis) * 1.0 / (s1 + s2)
+    ratio = (len(s1) + len(s2) - Ldis) * 1.0 / (len(s1) + len(s2))
 
-
+    return ratio
 
 
 def get_similar_score(token, term):
-    #return MyLevenshtein(token, term)
+    # return MyLevenshtein(token, term)
     return Levenshtein.ratio(token, term)
 
 
